@@ -5,6 +5,7 @@ import 'package:bones_app/features/get_started/presentation/view/get_started_vie
 import 'package:bones_app/features/login/presentation/view/login_view.dart';
 import 'package:bones_app/features/patient_home/presentation/view/patient_home_view.dart';
 import 'package:bones_app/features/payment/presentation/view/payment_view.dart';
+import 'package:bones_app/features/report_generating/presentation/view/report_generating_view.dart';
 import 'package:bones_app/features/splash/presentation/view/splash_view.dart';
 import 'package:go_router/go_router.dart';
 
@@ -16,6 +17,7 @@ abstract class AppRouter {
   static const kPaymentView = "/payment";
   static const kPatientHomeView = '/patientHome';
   static const kSpecialistHomeView = '/specialistHome';
+  static const kReportGeneratingView = '/reportGenerating';
 
   static final router = GoRouter(routes: [
     GoRoute(
@@ -45,6 +47,9 @@ abstract class AppRouter {
         builder: (context, state) => const PatientHomeView()),
     GoRoute(
         path: kSpecialistHomeView,
-        builder: (context, state) => const SpecialistHomeView())
+        builder: (context, state) => const SpecialistHomeView()),
+    GoRoute(
+        path: kReportGeneratingView,
+        builder: (context, state) => const ReportGeneratingView())
   ]);
 }

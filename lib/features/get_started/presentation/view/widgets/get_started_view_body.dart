@@ -8,49 +8,45 @@ class GetStartedViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          // Background Image
-          Positioned.fill(
-            child: Image.asset(
-              "assets/images/skeleton 1.png",
-              fit: BoxFit.cover,
-              opacity: const AlwaysStoppedAnimation(0.9),
-            ),
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        Positioned.fill(
+          child: Image.asset(
+            "assets/images/skeleton 1.png",
+            fit: BoxFit.cover,
+            opacity: const AlwaysStoppedAnimation(0.9),
           ),
+        ),
 
-          // Buttons - Wrapped in Column for proper layout
-          SafeArea(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CustomMiniButton(
-                      title: "Patient",
-                      onPressed: () {
-                        GoRouter.of(context).push(AppRouter.kPatientHomeView);
-                      },
-                    ),
-                    const SizedBox(width: 30),
-                    CustomMiniButton(
-                      title: "Specialist",
-                      onPressed: () {
-                        GoRouter.of(context)
-                            .push(AppRouter.kSpecialistHomeView);
-                      },
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 50),
-              ],
-            ),
+        // Buttons - Wrapped in Column for proper layout
+        SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomMiniButton(
+                    title: "Patient",
+                    onPressed: () {
+                      GoRouter.of(context).push(AppRouter.kPatientHomeView);
+                    },
+                  ),
+                  const SizedBox(width: 30),
+                  CustomMiniButton(
+                    title: "Specialist",
+                    onPressed: () {
+                      GoRouter.of(context).push(AppRouter.kSpecialistHomeView);
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 50),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

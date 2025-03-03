@@ -19,7 +19,7 @@ class PatientHomeViewBody extends StatelessWidget {
             opacity: 0.8),
       ),
       width: double.infinity,
-      child:const Padding(
+      child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
         child: Center(
           child: Column(
@@ -70,7 +70,8 @@ class PatientHomeViewBody extends StatelessWidget {
               CustomMidButton(
                 title: "Next",
                 width: 348,
-
+                onPressed: () =>
+                    GoRouter.of(context).push(AppRouter.kReportGeneratingView),
               )
             ],
           ),

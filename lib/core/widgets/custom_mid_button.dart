@@ -12,19 +12,22 @@ class CustomMidButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: width,
-      height: 48,
-      decoration: BoxDecoration(
-        color: kMidButtonColor.withOpacity(0.7),
-        borderRadius: BorderRadius.circular(15),
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        width: width,
+        height: 48,
+        decoration: BoxDecoration(
+          color: kMidButtonColor.withOpacity(0.7),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Center(
+            child: Text(
+          textAlign: TextAlign.center,
+          title,
+          style: Styles.textStyle15,
+        )),
       ),
-      child: Center(
-          child: Text(
-        textAlign: TextAlign.center,
-        title,
-        style: Styles.textStyle15,
-      )),
     );
   }
 }
