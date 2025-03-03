@@ -1,5 +1,7 @@
+import 'package:bones_app/core/utils/app_router.dart';
 import 'package:bones_app/core/widgets/custom_mini_button.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class GetStartedViewBody extends StatelessWidget {
   const GetStartedViewBody({super.key});
@@ -7,29 +9,48 @@ class GetStartedViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(
-      fit: StackFit.expand,
-      children: [
-        Image.asset(
-          "assets/images/skeleton 1.png",
-          height: MediaQuery.of(context).size.height,
-          fit: BoxFit.cover,
-          opacity: const AlwaysStoppedAnimation(0.9),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 50),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CustomMiniButton(title: "Paitent", onPressed: () {}),
-             const SizedBox(width: 30),
-              CustomMiniButton(title: "Spicalist", onPressed: () {}),
-            ],
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          // Background Image
+          Positioned.fill(
+            child: Image.asset(
+              "assets/images/skeleton 1.png",
+              fit: BoxFit.cover,
+              opacity: const AlwaysStoppedAnimation(0.9),
+            ),
           ),
-        ),
-        const SizedBox(height: 50),
-      ],
-    ));
+
+          // Buttons - Wrapped in Column for proper layout
+          SafeArea(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomMiniButton(
+                      title: "Patient",
+                      onPressed: () {
+                        GoRouter.of(context).push(AppRouter.kPatientHomeView);
+                      },
+                    ),
+                    const SizedBox(width: 30),
+                    CustomMiniButton(
+                      title: "Specialist",
+                      onPressed: () {
+                        GoRouter.of(context)
+                            .push(AppRouter.kSpecialistHomeView);
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 50),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

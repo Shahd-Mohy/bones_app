@@ -11,11 +11,11 @@ class PaymentViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 20.0),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 20.0),
             child: Row(
               children: [
                 SizedBox(
@@ -30,24 +30,24 @@ class PaymentViewBody extends StatelessWidget {
               ],
             ),
           ),
-          CustomTextFormField(
+          const CustomTextFormField(
             hintText: "*********2109",
             imagePath: AssetsData.visa,
           ),
           const SizedBox(
             height: 30,
           ),
-          CustomTextFormField(
+          const CustomTextFormField(
               hintText: "*********2109", imagePath: AssetsData.payPal),
           const SizedBox(
             height: 30,
           ),
-          CustomTextFormField(
+          const CustomTextFormField(
               hintText: "*********2109", imagePath: AssetsData.masterCard),
           const SizedBox(
             height: 30,
           ),
-          CustomTextFormField(
+          const CustomTextFormField(
               hintText: "*********2109", imagePath: AssetsData.applePay),
           const SizedBox(
             height: 50,

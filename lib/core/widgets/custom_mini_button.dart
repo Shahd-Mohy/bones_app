@@ -25,7 +25,7 @@ class CustomMiniButton extends StatelessWidget {
           ),
         ),
       ),
-      onTap: () => onPressed,
+      onTap:  onPressed,
     );
   }
 }
