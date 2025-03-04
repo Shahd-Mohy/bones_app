@@ -1,7 +1,6 @@
 import 'package:bones_app/core/utils/styles.dart';
 import 'package:bones_app/features/consultation/presentation/view/widgets/Specialists_list_view.dart';
 import 'package:bones_app/features/consultation/presentation/view/widgets/custom_search_bar.dart';
-import 'package:bones_app/features/consultation/presentation/view/widgets/specalist_list_item.dart';
 import 'package:flutter/material.dart';
 
 class ConsultationViewBody extends StatelessWidget {
