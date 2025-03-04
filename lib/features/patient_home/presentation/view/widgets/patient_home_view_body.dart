@@ -50,14 +50,18 @@ class PatientHomeViewBody extends StatelessWidget {
               const SizedBox(
                 height: 30,
               ),
-              const Row(
+              Row(
                 children: [
-                  Spacer(),
-                  HomeImage(image: AssetsData.consultSpisialist),
-                  SizedBox(
+                  const Spacer(),
+                  const HomeImage(image: AssetsData.consultSpisialist),
+                  const SizedBox(
                     width: 15,
                   ),
-                  CustomMidButton(title: "Consult a Specialist"),
+                  CustomMidButton(
+                    title: "Consult a Specialist",
+                    onPressed: () =>
+                        GoRouter.of(context).push(AppRouter.kConsultationView),
+                  ),
                 ],
               ),
               const SizedBox(

@@ -15,4 +15,5 @@ class AssetsData {
   static const consultSpisialist = "assets/images/PH3.png";
   static const uploadIcon = "assets/images/upload.png";
   static const feedbackImage = "assets/images/feedback.png";
+  static const userImage = "assets/images/user.png";
 }
