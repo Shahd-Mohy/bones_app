@@ -29,15 +29,15 @@ class CustomSearchBar extends StatelessWidget {
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: const BorderSide(
-                      color: kPrimaryColor,
+                      color: kSecondaryColor,
                     )),
                 focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
                     borderSide: const BorderSide(
-                      color: kPrimaryColor,
+                      color: kSecondaryColor,
                     )),
                 hintText: 'Search for a consultant.... ',
-                hintStyle: Styles.hintTextStyle,
+                hintStyle: Styles.notesTextStyle,
                 suffixIcon: IconButton(
                     onPressed: () {},
                     icon: const Icon(

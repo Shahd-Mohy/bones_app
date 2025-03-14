@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 abstract class Styles {
   static const textStyle15 =
-      TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Colors.white);
-  static const hintTextStyle = TextStyle(
-      fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xff9E9A9A));
+      TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Colors.black);
+  static const notesTextStyle =
+      TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black);
   static const textStyle25 =
       TextStyle(fontSize: 25, fontWeight: FontWeight.w600, color: Colors.black);
   static const textStyle14 =

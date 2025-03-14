@@ -18,7 +18,7 @@ class BonesApp extends StatelessWidget {
       theme: ThemeData.light().copyWith(
           scaffoldBackgroundColor: kPrimaryColor,
           textTheme:
-              GoogleFonts.montserratTextTheme(ThemeData.light().textTheme)),
+              GoogleFonts.interTextTheme(ThemeData.light().textTheme)),
     );
   }
 }

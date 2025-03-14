@@ -17,57 +17,67 @@ class SpecialistHomeViewBody extends StatelessWidget {
             opacity: 0.8),
       ),
       width: double.infinity,
-      child: const Padding(
+      child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
         child: Center(
           child: Column(
             children: [
               Row(
                 children: [
-                  Spacer(),
-                  HomeImage(image: AssetsData.uploadImage),
-                  SizedBox(
+                  const Spacer(),
+                  const HomeImage(image: AssetsData.uploadImage),
+                  const SizedBox(
                     width: 15,
                   ),
-                  CustomMidButton(title: "Upload Image"),
+                  CustomMidButton(
+                    title: "Upload Image",
+                    onPressed: () {},
+                  ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Row(
                 children: [
-                  CustomMidButton(title: "Retrive Image"),
-                  SizedBox(
+                  CustomMidButton(
+                    title: "Retrive Image",
+                    onPressed: () {},
+                  ),
+                  const SizedBox(
                     width: 15,
                   ),
-                  HomeImage(image: AssetsData.retrieveImage),
-                  Spacer(),
+                  const HomeImage(image: AssetsData.retrieveImage),
+                  const Spacer(),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Row(
                 children: [
-                  Spacer(),
-                  HomeImage(image: AssetsData.feedbackImage),
-                  SizedBox(
+                  const Spacer(),
+                  const HomeImage(image: AssetsData.feedbackImage),
+                  const SizedBox(
                     width: 15,
                   ),
-                  CustomMidButton(title: "Give feedBack"),
+                  CustomMidButton(
+                    title: "Give feedBack",
+                    onPressed: () {},
+                  ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
-              UploadImageBox(),
-              SizedBox(
+              const UploadImageBox(),
+              const SizedBox(
                 height: 20,
               ),
               CustomMidButton(
                 title: "Next",
                 width: 348,
+                onPressed: () {},
               )
             ],
           ),

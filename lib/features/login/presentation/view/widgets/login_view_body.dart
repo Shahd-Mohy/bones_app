@@ -1,6 +1,5 @@
 import 'package:bones_app/constants.dart';
 import 'package:bones_app/core/utils/app_router.dart';
-import 'package:bones_app/core/utils/assets.dart';
 import 'package:bones_app/core/utils/styles.dart';
 import 'package:bones_app/core/widgets/contacts.dart';
 import 'package:bones_app/core/widgets/custom_large_button.dart';
@@ -13,95 +12,94 @@ class LoginViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 45),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
+    final height = MediaQuery.of(context).size.height;
+    // final width = MediaQuery.of(context).size.width;
+
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: height * 0.03),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                CheckboxTheme(
+                  data: CheckboxThemeData(
+                    side: const BorderSide(width: 0.5, color: Colors.black),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                  child: Checkbox(
+                    value: false, // Add state management for this
+                    onChanged: (value) {},
+                  ),
+                ),
+                Text(
+                  "Remember me",
+                  style: Styles.notesTextStyle.copyWith(color: Colors.black),
+                ),
+              ],
+            ),
+            const CustomTextFormField(
+              label: "Email or Phone",
+              hintText: "example@gmail.com..",
+            ),
+            // SizedBox(height: height * 0.02),
+            const CustomTextFormField(
+              label: "Password",
+              hintText: "Enter your password..",
+              isobsecureText: true,
+              sufIcon: Icon(Icons.remove_red_eye),
+            ),
+            SizedBox(height: height * 0.02),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                GestureDetector(
+                  child: Text(
+                    "Forgot Password ?",
+                    style: Styles.notesTextStyle.copyWith(
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                  onTap: () =>
+                      GoRouter.of(context).push(AppRouter.kForgetPasswordView),
+                ),
+              ],
+            ),
+            SizedBox(height: height * 0.19),
+            CustomLargeButton(
+              title: "Login",
+              onPressed: () =>
+                  GoRouter.of(context).push(AppRouter.kPatientHomeView),
+            ),
+            SizedBox(height: height * 0.03),
+            Center(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 280,
-                    width: 233,
-                    child: Image.asset(AssetsData.logo),
+                  Text(
+                    "Don’t have an account? ",
+                    style: Styles.notesTextStyle.copyWith(color: Colors.black),
                   ),
-                ],
-              ),
-              const CustomTextFormField(
-                hintText: "Username or Email",
-                preIcon: Icon(Icons.person, color: kIconColor),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              const CustomTextFormField(
-                hintText: "Password",
-                preIcon: Icon(
-                  Icons.lock,
-                  color: kIconColor,
-                ),
-                sufIcon: Icon(Icons.remove_red_eye),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
                   GestureDetector(
+                    onTap: () =>
+                        GoRouter.of(context).push(AppRouter.kRegisterView),
                     child: Text(
-                      "Forgot Password ?",
-                      style: Styles.hintTextStyle.copyWith(color: kNotesColor),
+                      "Sign Up!",
+                      style: Styles.notesTextStyle.copyWith(color: kNotesColor),
                     ),
-                    onTap: () => GoRouter.of(context)
-                        .push(AppRouter.kForgetPasswordView),
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 15,
-              ),
-              CustomLargeButton(
-                  title: 'Login ',
-                  onPressed: () =>
-                      GoRouter.of(context).push(AppRouter.kGetStartedView)),
-              const SizedBox(
-                height: 15,
-              ),
-              const Contacts(),
-              const SizedBox(
-                height: 15,
-              ),
-              Center(
-                child: SizedBox(
-                  height: 30,
-                  width: MediaQuery.of(context).size.width,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Don`t have an account ? ",
-                        style:
-                            Styles.hintTextStyle.copyWith(color: Colors.black),
-                      ),
-                      GestureDetector(
-                        onTap: () =>
-                            GoRouter.of(context).push(AppRouter.kRegisterView),
-                        child: Text(
-                          "Register now!",
-                          style:
-                              Styles.hintTextStyle.copyWith(color: kNotesColor),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
+            ),
+            SizedBox(height: height * 0.03),
+            const Contacts(),
+            SizedBox(height: height * 0.02),
+          ],
         ),
       ),
     );

@@ -9,19 +9,18 @@ class ContactImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 56,
-      width: 56,
-      decoration: BoxDecoration(
+      height: 40,
+      width: 40,
+      decoration: const BoxDecoration(
         shape: BoxShape.circle,
-        color: kTextFieldColor,
-        border: Border.all(color: kButtonColor, width: 1.0),
+        color: kPrimaryColor,
       ),
       child: Center(
         child: Image(
           image: AssetImage(logo),
-          width: 25,
-          height: 25,
-          fit: BoxFit.contain,
+          width: 40,
+          height: 40,
+          fit: BoxFit.fill,
         ),
       ),
     );

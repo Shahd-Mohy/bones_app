@@ -10,12 +10,21 @@ class CustomMiniButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: onPressed,
       child: Container(
         height: 48,
         width: 140,
         decoration: BoxDecoration(
-          color: kMiniButtonColor,
+          color: kSecondaryColor,
           borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: kIconSoftGreyColor.withOpacity(0.5),
+              spreadRadius: 0,
+              offset: const Offset(0, 6),
+              blurRadius: 10,
+            ),
+          ],
         ),
         child: Center(
           child: Text(
@@ -25,7 +34,6 @@ class CustomMiniButton extends StatelessWidget {
           ),
         ),
       ),
-      onTap:  onPressed,
     );
   }
 }

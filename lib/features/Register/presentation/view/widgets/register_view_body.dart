@@ -14,42 +14,25 @@ class RegisterViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 45),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
-              height: 45,
-            ),
-            const Center(
-              child: Text(
-                'Create an account!',
-                style: Styles.textStyle25,
-              ),
-            ),
-            const SizedBox(
-              height: 50,
+            const CustomTextFormField(
+              label: "Full Name",
+              hintText: "Enter your name",
             ),
             const CustomTextFormField(
-              hintText: "Full name",
-            ),
-            const SizedBox(
-              height: 20,
+              label: "Email or Phone",
+              hintText: "example@gmail.com",
             ),
             const CustomTextFormField(
-              hintText: "Email",
-            ),
-            const SizedBox(
-              height: 20,
+              label: "Password",
+              hintText: "Enter your password",
             ),
             const CustomTextFormField(
-              hintText: "Password",
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const CustomTextFormField(
-              hintText: "Confirm Password",
+              label: "Confirm Password",
+              hintText: "Confirm your password here",
             ),
             const SizedBox(
               height: 40,
@@ -61,20 +44,17 @@ class RegisterViewBody extends StatelessWidget {
             const SizedBox(
               height: 15,
             ),
-            const Contacts(),
-            const SizedBox(
-              height: 15,
-            ),
             Center(
               child: SizedBox(
-                height: 30,
+                height: MediaQuery.of(context).size.height * 0.05,
                 width: MediaQuery.of(context).size.width,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Don`t have an account ? ",
-                      style: Styles.hintTextStyle.copyWith(color: Colors.black),
+                      "Have an account ? ",
+                      style:
+                          Styles.notesTextStyle.copyWith(color: Colors.black),
                     ),
                     GestureDetector(
                       onTap: () =>
@@ -82,13 +62,17 @@ class RegisterViewBody extends StatelessWidget {
                       child: Text(
                         "Login now!",
                         style:
-                            Styles.hintTextStyle.copyWith(color: kNotesColor),
+                            Styles.notesTextStyle.copyWith(color: kNotesColor),
                       ),
                     )
                   ],
                 ),
               ),
-            )
+            ),
+            const Contacts(),
+            const SizedBox(
+              height: 15,
+            ),
           ],
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:bones_app/constants.dart';
+import 'package:bones_app/core/utils/styles.dart';
 import 'package:flutter/material.dart';
 
 class CustomLargeButton extends StatelessWidget {
@@ -14,17 +15,13 @@ class CustomLargeButton extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         width: double.infinity,
-        height: 65,
+        height: MediaQuery.of(context).size.height * 0.07,
         decoration: BoxDecoration(
-          color: kButtonColor,
-          borderRadius: BorderRadius.circular(15),
+          color: kSecondaryColor,
+          borderRadius: BorderRadius.circular(12),
         ),
         child: Center(
-          child: Text(title,
-              style: const TextStyle(
-                  fontSize: 25,
-                  color: Color(0xff2B2B29),
-                  fontWeight: FontWeight.w600)),
+          child: Text(title, style: Styles.textStyle20),
         ),
       ),
     );

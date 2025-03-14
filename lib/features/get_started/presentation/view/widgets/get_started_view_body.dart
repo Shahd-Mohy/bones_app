@@ -1,5 +1,8 @@
+import 'package:bones_app/constants.dart';
 import 'package:bones_app/core/utils/app_router.dart';
-import 'package:bones_app/core/widgets/custom_mini_button.dart';
+import 'package:bones_app/core/utils/assets.dart';
+import 'package:bones_app/core/utils/styles.dart';
+import 'package:bones_app/core/widgets/custom_mid_button.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -8,45 +11,55 @@ class GetStartedViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        Positioned.fill(
-          child: Image.asset(
-            "assets/images/skeleton 1.png",
-            fit: BoxFit.cover,
-            opacity: const AlwaysStoppedAnimation(0.9),
-          ),
-        ),
+    final height = MediaQuery.of(context).size.height;
 
-        // Buttons - Wrapped in Column for proper layout
-        SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CustomMiniButton(
-                    title: "Patient",
-                    onPressed: () {
-                      GoRouter.of(context).push(AppRouter.kPatientHomeView);
-                    },
+    return Scaffold(
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: SizedBox(
+            height: height,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Spacer(flex: 10),
+                      Image.asset(AssetsData.logo),
+                      const Text("Let’s get started!",
+                          style: Styles.textStyle20),
+                      SizedBox(height: height * 0.02), // Responsive spacing
+                      Text(
+                        "Login to enjoy the features we’ve \nprovided, and stay healthy!",
+                        textAlign: TextAlign.center,
+                        style: Styles.textStyle14
+                            .copyWith(color: kIconSoftGreyColor),
+                      ),
+                      SizedBox(height: height * 0.05), // Responsive spacing
+                      CustomMidButton(
+                        title: "Login",
+                        onPressed: () =>
+                            GoRouter.of(context).push(AppRouter.kLoginView),
+                      ),
+                      SizedBox(height: height * 0.02), // Responsive spacing
+                      CustomMidButton(
+                        color: kPrimaryColor,
+                        title: "Sign Up",
+                        onPressed: () =>
+                            GoRouter.of(context).push(AppRouter.kRegisterView),
+                      ),
+                      const Spacer(flex: 10),
+                    ],
                   ),
-                  const SizedBox(width: 30),
-                  CustomMiniButton(
-                    title: "Specialist",
-                    onPressed: () {
-                      GoRouter.of(context).push(AppRouter.kSpecialistHomeView);
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(height: 50),
-            ],
+                ),
+              ],
+            ),
           ),
         ),
-      ],
+      ),
     );
   }
 }

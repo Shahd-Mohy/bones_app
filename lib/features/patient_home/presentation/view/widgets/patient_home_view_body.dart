@@ -24,27 +24,33 @@ class PatientHomeViewBody extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              const Row(
+              Row(
                 children: [
-                  Spacer(),
-                  HomeImage(image: AssetsData.uploadImage),
-                  SizedBox(
+                  const Spacer(),
+                  const HomeImage(image: AssetsData.uploadImage),
+                  const SizedBox(
                     width: 15,
                   ),
-                  CustomMidButton(title: "Upload Image"),
+                  CustomMidButton(
+                    title: "Upload Image",
+                    onPressed: () {},
+                  ),
                 ],
               ),
               const SizedBox(
                 height: 30,
               ),
-              const Row(
+              Row(
                 children: [
-                  CustomMidButton(title: "Retrive Image"),
-                  SizedBox(
+                  CustomMidButton(
+                    title: "Retrive Image",
+                    onPressed: () {},
+                  ),
+                  const SizedBox(
                     width: 15,
                   ),
-                  HomeImage(image: AssetsData.retrieveImage),
-                  Spacer(),
+                  const HomeImage(image: AssetsData.retrieveImage),
+                  const Spacer(),
                 ],
               ),
               const SizedBox(

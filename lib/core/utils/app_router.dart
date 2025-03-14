@@ -7,10 +7,11 @@ import 'package:bones_app/features/login/presentation/view/login_view.dart';
 import 'package:bones_app/features/patient_home/presentation/view/patient_home_view.dart';
 import 'package:bones_app/features/payment/presentation/view/payment_view.dart';
 import 'package:bones_app/features/report_generating/presentation/view/report_generating_view.dart';
-import 'package:bones_app/features/splash/presentation/view/splash_view.dart';
+import 'package:bones_app/features/welcome/presentation/view/welcome_view.dart';
 import 'package:go_router/go_router.dart';
 
 abstract class AppRouter {
+  static const kWelcomeView = '/welcome';
   static const kGetStartedView = '/getStarted';
   static const kLoginView = '/login';
   static const kForgetPasswordView = '/forgetPassword';
@@ -22,10 +23,7 @@ abstract class AppRouter {
   static const kConsultationView = '/consultation';
 
   static final router = GoRouter(routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const SplashView(),
-    ),
+    GoRoute(path: "/", builder: (context, state) => const WelcomeView()),
     GoRoute(
       path: kGetStartedView,
       builder: (context, state) => const GetStartedView(),
@@ -40,7 +38,7 @@ abstract class AppRouter {
     ),
     GoRoute(
       path: kRegisterView,
-      builder: (context, State) => const RegisterView(),
+      builder: (context, state) => const RegisterView(),
     ),
     GoRoute(
         path: kPaymentView, builder: (context, state) => const PaymentView()),
