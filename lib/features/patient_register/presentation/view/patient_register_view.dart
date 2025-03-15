@@ -1,14 +1,14 @@
 import 'package:bones_app/constants.dart';
 import 'package:bones_app/core/utils/styles.dart';
-import 'package:bones_app/features/Register/presentation/view/widgets/register_view_body.dart';
+import 'package:bones_app/features/patient_register/presentation/view/widgets/patient_register_view_body.dart';
 import 'package:flutter/material.dart';
 
-class RegisterView extends StatelessWidget {
-  const RegisterView({super.key});
+class PatientRegisterView extends StatelessWidget {
+  const PatientRegisterView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
         centerTitle: true,
@@ -25,7 +25,7 @@ class RegisterView extends StatelessWidget {
               Navigator.pop(context);
             }),
       ),
-      body: const RegisterViewBody(),
+      body: const PatientRegisterViewBody(),
     );
   }
 }

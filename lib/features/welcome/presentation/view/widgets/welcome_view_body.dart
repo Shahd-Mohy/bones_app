@@ -37,16 +37,20 @@ class WelcomeViewBody extends StatelessWidget {
             CustomWelcomeImage(
                 title: "Patient",
                 imagePath: AssetsData.hospitalPatientImage,
-                onPressed: () =>
-                    GoRouter.of(context).push(AppRouter.kGetStartedView)),
+                onPressed: () {
+                  GoRouter.of(context)
+                      .push(AppRouter.kGetStartedView, extra: "Patient");
+                }),
             const Spacer(
               flex: 4,
             ),
             CustomWelcomeImage(
                 title: "Doctor",
                 imagePath: AssetsData.doctorImage,
-                onPressed: () =>
-                    GoRouter.of(context).push(AppRouter.kGetStartedView)),
+                onPressed: () {
+                  GoRouter.of(context)
+                      .push(AppRouter.kGetStartedView, extra: "Doctor");
+                }),
             const Spacer(
               flex: 4,
             ),

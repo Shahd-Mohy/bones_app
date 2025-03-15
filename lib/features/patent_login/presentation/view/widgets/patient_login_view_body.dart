@@ -7,8 +7,8 @@ import 'package:bones_app/core/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class LoginViewBody extends StatelessWidget {
-  const LoginViewBody({super.key});
+class PatientLoginViewBody extends StatelessWidget {
+  const PatientLoginViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -86,8 +86,8 @@ class LoginViewBody extends StatelessWidget {
                     style: Styles.notesTextStyle.copyWith(color: Colors.black),
                   ),
                   GestureDetector(
-                    onTap: () =>
-                        GoRouter.of(context).push(AppRouter.kRegisterView),
+                    onTap: () => GoRouter.of(context)
+                        .push(AppRouter.kPatientRegisterView),
                     child: Text(
                       "Sign Up!",
                       style: Styles.notesTextStyle.copyWith(color: kNotesColor),

@@ -1,14 +1,13 @@
 import 'package:bones_app/constants.dart';
 import 'package:bones_app/core/utils/app_router.dart';
 import 'package:bones_app/core/utils/styles.dart';
-import 'package:bones_app/core/widgets/contacts.dart';
 import 'package:bones_app/core/widgets/custom_large_button.dart';
 import 'package:bones_app/core/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class RegisterViewBody extends StatelessWidget {
-  const RegisterViewBody({super.key});
+class SpecalistRegisterViewBody extends StatelessWidget {
+  const SpecalistRegisterViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +33,11 @@ class RegisterViewBody extends StatelessWidget {
               label: "Confirm Password",
               hintText: "Confirm your password here",
             ),
+// Willlll be edited soon ///////////////////////////////////////////////////////////////////////
+            const CustomTextFormField(
+              label: "Certefication",
+              hintText: "Attach your certification here",
+            ),
             const SizedBox(
               height: 40,
             ),
@@ -57,8 +61,8 @@ class RegisterViewBody extends StatelessWidget {
                           Styles.notesTextStyle.copyWith(color: Colors.black),
                     ),
                     GestureDetector(
-                      onTap: () =>
-                          GoRouter.of(context).push(AppRouter.kLoginView),
+                      onTap: () => GoRouter.of(context)
+                          .push(AppRouter.kPatientLoginView),
                       child: Text(
                         "Login now!",
                         style:
@@ -68,10 +72,6 @@ class RegisterViewBody extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
-            const Contacts(),
-            const SizedBox(
-              height: 15,
             ),
           ],
         ),

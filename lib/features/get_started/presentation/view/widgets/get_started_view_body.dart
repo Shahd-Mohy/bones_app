@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class GetStartedViewBody extends StatelessWidget {
-  const GetStartedViewBody({super.key});
+  const GetStartedViewBody({super.key, required this.userType});
+  final String userType;
 
   @override
   Widget build(BuildContext context) {
@@ -40,16 +41,29 @@ class GetStartedViewBody extends StatelessWidget {
                       ),
                       SizedBox(height: height * 0.05), // Responsive spacing
                       CustomMidButton(
-                        title: "Login",
-                        onPressed: () =>
-                            GoRouter.of(context).push(AppRouter.kLoginView),
-                      ),
+                          title: "Login",
+                          onPressed: () {
+                            if (userType == "Doctor") {
+                              GoRouter.of(context)
+                                  .push(AppRouter.kSpecalistLoginView);
+                            } else {
+                              GoRouter.of(context)
+                                  .push(AppRouter.kPatientLoginView);
+                            }
+                          }),
                       SizedBox(height: height * 0.02), // Responsive spacing
                       CustomMidButton(
                         color: kPrimaryColor,
                         title: "Sign Up",
-                        onPressed: () =>
-                            GoRouter.of(context).push(AppRouter.kRegisterView),
+                        onPressed: () {
+                            if (userType == "Doctor") {
+                              GoRouter.of(context)
+                                  .push(AppRouter.kSpecalistRegisterView);
+                            } else {
+                              GoRouter.of(context)
+                                  .push(AppRouter.kPatientRegisterView);
+                            }
+                          }
                       ),
                       const Spacer(flex: 10),
                     ],

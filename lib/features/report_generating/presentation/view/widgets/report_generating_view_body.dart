@@ -1,5 +1,4 @@
 import 'package:bones_app/core/utils/styles.dart';
-import 'package:bones_app/core/widgets/custom_mid_button.dart';
 import 'package:bones_app/features/report_generating/presentation/view/widgets/report_generating_box.dart';
 import 'package:flutter/material.dart';
 
