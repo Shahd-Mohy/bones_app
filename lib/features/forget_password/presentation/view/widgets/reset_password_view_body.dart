@@ -1,12 +1,10 @@
-import 'package:bones_app/core/utils/app_router.dart';
 import 'package:bones_app/core/utils/styles.dart';
 import 'package:bones_app/core/widgets/custom_large_button.dart';
 import 'package:bones_app/core/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
-class ForgetPasswordViewBody extends StatelessWidget {
-  const ForgetPasswordViewBody({super.key});
+class ResetPasswordViewBody extends StatelessWidget {
+  const ResetPasswordViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +20,14 @@ class ForgetPasswordViewBody extends StatelessWidget {
                 children: [
                   Center(
                     child: Text(
-                      'Enter your email or phone number',
+                      'Enter your New password',
                       style: Styles.textStyle14
                           .copyWith(fontWeight: FontWeight.w500),
                     ),
                   ),
                   Center(
                     child: Text(
-                      'to change your password',
+                      'And change your password',
                       style: Styles.textStyle14
                           .copyWith(fontWeight: FontWeight.w500),
                     ),
@@ -38,14 +36,21 @@ class ForgetPasswordViewBody extends StatelessWidget {
               ),
             ),
             const CustomTextFormField(
-              label: "Email",
-              hintText: "example@gmail.com",
+              label: "Create new password",
+              hintText: "Make it strong..",
+              sufIcon: Icon(Icons.remove_red_eye_outlined),
+            ),
+            const SizedBox(height: 10),
+            const CustomTextFormField(
+              sufIcon: Icon(Icons.remove_red_eye_outlined),
+              label: "Confirm new password",
+              hintText: "Confirm new password",
             ),
             const SizedBox(height: 10),
             CustomLargeButton(
-                title: 'Send Code',
-                onPressed: () =>
-                    GoRouter.of(context).push(AppRouter.kCodeVerifyView)),
+              title: 'Login',
+              onPressed: () {},
+            ),
           ],
         ),
       ),

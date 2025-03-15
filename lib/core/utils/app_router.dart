@@ -1,3 +1,5 @@
+import 'package:bones_app/features/forget_password/presentation/view/code_verification_view.dart';
+import 'package:bones_app/features/forget_password/presentation/view/reset_password_view.dart';
 import 'package:bones_app/features/patient_register/presentation/view/patient_register_view.dart';
 import 'package:bones_app/features/Specalist_home/presentation/view/specialist_home_view.dart';
 import 'package:bones_app/features/consultation/presentation/view/consultation_view.dart';
@@ -22,6 +24,8 @@ abstract class AppRouter {
   static const kSpecalistRegisterView = '/specalistRegister';
   static const kSpecialistHomeView = '/specialistHome';
   static const kForgetPasswordView = '/forgetPassword';
+  static const kCodeVerifyView = '/codeVerify';
+  static const kResetPasswordView = '/resetPassword';
   static const kPaymentView = "/payment";
   static const kReportGeneratingView = '/reportGenerating';
   static const kConsultationView = '/consultation';
@@ -32,17 +36,23 @@ abstract class AppRouter {
       path: kGetStartedView,
       builder: (context, state) {
         final String userType = state.extra.toString();
-        return GetStartedView(userType: userType,);
+        return GetStartedView(
+          userType: userType,
+        );
       },
     ),
     GoRoute(
-      path: kPatientLoginView,
-      builder: (context, state) => const PatientLoginView(),
-    ),
+        path: kPatientLoginView,
+        builder: (context, state) => const PatientLoginView()),
     GoRoute(
-      path: kForgetPasswordView,
-      builder: (context, state) => const ForgetPasswordView(),
-    ),
+        path: kForgetPasswordView,
+        builder: (context, state) => const ForgetPasswordView()),
+    GoRoute(
+        path: kCodeVerifyView,
+        builder: (context, state) => const CodeVerificationView()),
+    GoRoute(
+        path: kResetPasswordView,
+        builder: (context, state) => const ResetPasswordView()),
     GoRoute(
       path: kPatientRegisterView,
       builder: (context, state) => const PatientRegisterView(),
