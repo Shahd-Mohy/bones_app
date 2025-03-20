@@ -22,7 +22,7 @@ class CustomMidButton extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         width: width,
-        height: 48,
+        height: 52,
         decoration: BoxDecoration(
           color: color ?? kSecondaryColor.withOpacity(0.7),
           borderRadius: BorderRadius.circular(15),

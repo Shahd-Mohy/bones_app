@@ -72,7 +72,7 @@ class SpecalistLoginViewBody extends StatelessWidget {
             CustomLargeButton(
               title: "Login",
               onPressed: () =>
-                  GoRouter.of(context).push(AppRouter.kPatientHomeView),
+                  GoRouter.of(context).push(AppRouter.kSpecialistHomeView),
             ),
             SizedBox(height: height * 0.03),
             Center(
@@ -85,7 +85,7 @@ class SpecalistLoginViewBody extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () => GoRouter.of(context)
-                        .push(AppRouter.kPatientRegisterView),
+                        .push(AppRouter.kSpecalistRegisterView),
                     child: Text(
                       "Sign Up!",
                       style: Styles.notesTextStyle.copyWith(color: kNotesColor),

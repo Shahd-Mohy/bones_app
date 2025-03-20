@@ -1,83 +1,83 @@
-import 'package:bones_app/core/utils/assets.dart';
+import 'package:bones_app/constants.dart';
+import 'package:bones_app/core/utils/app_router.dart';
 import 'package:bones_app/core/widgets/custom_mid_button.dart';
-import 'package:bones_app/core/widgets/home_image.dart';
 import 'package:bones_app/core/widgets/upload_image_box.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:icons_plus/icons_plus.dart';
 
 class SpecialistHomeViewBody extends StatelessWidget {
   const SpecialistHomeViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage(AssetsData.backGround1),
-            fit: BoxFit.cover,
-            opacity: 0.8),
-      ),
+    return SizedBox(
       width: double.infinity,
+      height: MediaQuery.of(context).size.height - kToolbarHeight,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
         child: Center(
           child: Column(
             children: [
+              const UploadImageBox(),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.01,
+              ),
+              const Spacer(),
               Row(
                 children: [
                   const Spacer(),
-                  const HomeImage(image: AssetsData.uploadImage),
-                  const SizedBox(
-                    width: 15,
+                  const Icon(
+                    Clarity.camera_solid,
+                    size: 30,
+                    color: kSecondaryColor,
                   ),
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.08),
                   CustomMidButton(
                     title: "Upload Image",
                     onPressed: () {},
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 30,
-              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Row(
                 children: [
                   CustomMidButton(
                     title: "Retrive Image",
                     onPressed: () {},
                   ),
-                  const SizedBox(
-                    width: 15,
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.08),
+                  const Icon(
+                    Clarity.backup_restore_solid,
+                    size: 30,
+                    color: kSecondaryColor,
                   ),
-                  const HomeImage(image: AssetsData.retrieveImage),
                   const Spacer(),
                 ],
               ),
-              const SizedBox(
-                height: 30,
-              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Row(
                 children: [
                   const Spacer(),
-                  const HomeImage(image: AssetsData.feedbackImage),
-                  const SizedBox(
-                    width: 15,
+                  const Icon(
+                    Icons.feedback_outlined,
+                    size: 30,
+                    color: kSecondaryColor,
                   ),
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.08),
                   CustomMidButton(
-                    title: "Give feedBack",
-                    onPressed: () {},
+                    title: "Give FeedBack",
+                    onPressed: () =>
+                        GoRouter.of(context).push(AppRouter.kConsultationView),
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 40,
-              ),
-              const UploadImageBox(),
-              const SizedBox(
-                height: 20,
-              ),
+              Spacer(),
               CustomMidButton(
                 title: "Next",
                 width: 348,
-                onPressed: () {},
+                onPressed: () =>
+                    GoRouter.of(context).push(AppRouter.kReportGeneratingView),
               )
             ],
           ),
