@@ -23,16 +23,24 @@ class PatientRegisterViewBody extends StatelessWidget {
               hintText: "Enter your name",
             ),
             const CustomTextFormField(
-              label: "Email or Phone",
+              label: "Phone Number",
+              hintText: "Enter your phone number",
+            ),
+            const CustomTextFormField(
+              label: "Email",
               hintText: "example@gmail.com",
             ),
             const CustomTextFormField(
               label: "Password",
               hintText: "Enter your password",
+              isobsecureText: true,
+              sufIcon: Icon(Icons.remove_red_eye),
             ),
             const CustomTextFormField(
               label: "Confirm Password",
               hintText: "Confirm your password here",
+              isobsecureText: true,
+              sufIcon: Icon(Icons.remove_red_eye),
             ),
             const SizedBox(
               height: 40,

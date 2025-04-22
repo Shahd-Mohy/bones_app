@@ -10,7 +10,7 @@ class ReportGeneratingContainer extends StatelessWidget {
       width: 359,
       height: 400,
       decoration: BoxDecoration(
-        color: kUploadImageBoxColor,
+        color: kTextFieldColor,
         borderRadius: BorderRadius.circular(25),
         boxShadow: [
           BoxShadow(
@@ -25,7 +25,7 @@ class ReportGeneratingContainer extends StatelessWidget {
           ),
         ],
         border: Border.all(
-          color: Colors.grey.withOpacity(0.7),
+          color: kTextFieldColor.withOpacity(0.5),
           width: 2,
         ),
       ),

@@ -24,7 +24,6 @@ class ReportGeneratingViewBody extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-           // const CustomMidButton(title: "View The Report"),
             const SizedBox(
               height: 40,
             ),

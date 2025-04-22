@@ -3,6 +3,7 @@ import 'package:bones_app/core/utils/app_router.dart';
 import 'package:bones_app/core/utils/styles.dart';
 import 'package:bones_app/core/widgets/custom_large_button.dart';
 import 'package:bones_app/core/widgets/custom_text_field.dart';
+import 'package:bones_app/features/specalist_register/presentation/widgets/Upload_certificat.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -22,22 +23,24 @@ class SpecalistRegisterViewBody extends StatelessWidget {
               hintText: "Enter your name",
             ),
             const CustomTextFormField(
-              label: "Email or Phone",
+              label: "Phone Number",
+              hintText: "Enter your phone number",
+            ),
+            const CustomTextFormField(
+              label: "Email",
               hintText: "example@gmail.com",
             ),
             const CustomTextFormField(
               label: "Password",
               hintText: "Enter your password",
+              isobsecureText: true,
             ),
             const CustomTextFormField(
               label: "Confirm Password",
               hintText: "Confirm your password here",
+              isobsecureText: true,
             ),
-// Willlll be edited soon ///////////////////////////////////////////////////////////////////////
-            const CustomTextFormField(
-              label: "Certefication",
-              hintText: "Attach your certification here",
-            ),
+            const UploadCertificat(),
             const SizedBox(
               height: 40,
             ),

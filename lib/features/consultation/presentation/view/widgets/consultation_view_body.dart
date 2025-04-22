@@ -8,29 +8,31 @@ class ConsultationViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Center(
-        child: Column(
-          children: [
-            const CustomSearchBar(),
-            Padding(
-              padding: const EdgeInsets.only(top: 10, bottom: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    "Popular Specialists For you ",
-                    style: Styles.textStyle15.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        decoration: TextDecoration.underline),
-                  )
-                ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Center(
+          child: Column(
+            children: [
+              const CustomSearchBar(),
+              Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Popular Specialists For you ",
+                      style: Styles.textStyle15.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          decoration: TextDecoration.underline),
+                    )
+                  ],
+                ),
               ),
-            ),
-            SpecialistsListView()
-          ],
+              const SpecialistsListView()
+            ],
+          ),
         ),
       ),
     );

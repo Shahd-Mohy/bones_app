@@ -1,13 +1,41 @@
+import 'dart:io';
 import 'package:bones_app/constants.dart';
 import 'package:bones_app/core/utils/app_router.dart';
 import 'package:bones_app/core/widgets/custom_mid_button.dart';
 import 'package:bones_app/core/widgets/upload_image_box.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:icons_plus/icons_plus.dart';
 
-class PatientHomeViewBody extends StatelessWidget {
+class PatientHomeViewBody extends StatefulWidget {
   const PatientHomeViewBody({super.key});
+
+  @override
+  State<PatientHomeViewBody> createState() => _PatientHomeViewBodyState();
+}
+
+class _PatientHomeViewBodyState extends State<PatientHomeViewBody> {
+  File? selectedImage;
+  bool isPicking = false;
+
+  void _pickImage() async {
+    if (isPicking) return;
+    isPicking = true;
+
+    try {
+      final result = await FilePicker.platform.pickFiles();
+      if (result != null && result.files.single.path != null) {
+        setState(() {
+          selectedImage = File(result.files.single.path!);
+        });
+      }
+    } catch (e) {
+      debugPrint('File picker error: $e');
+    } finally {
+      isPicking = false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +47,10 @@ class PatientHomeViewBody extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              const UploadImageBox(),
+              UploadImageBox(
+                selectedImage: selectedImage,
+                onTap: _pickImage,
+              ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.01,
               ),
@@ -35,7 +66,7 @@ class PatientHomeViewBody extends StatelessWidget {
                   SizedBox(width: MediaQuery.of(context).size.width * 0.08),
                   CustomMidButton(
                     title: "Upload Image",
-                    onPressed: () {},
+                    onPressed: _pickImage,
                   ),
                 ],
               ),
@@ -72,9 +103,9 @@ class PatientHomeViewBody extends StatelessWidget {
                   ),
                 ],
               ),
-              Spacer(),
+              const Spacer(),
               CustomMidButton(
-                title: "Next",
+                title: "View report",
                 width: 348,
                 onPressed: () =>
                     GoRouter.of(context).push(AppRouter.kReportGeneratingView),

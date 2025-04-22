@@ -1,33 +1,55 @@
+import 'dart:io';
 import 'package:bones_app/constants.dart';
 import 'package:bones_app/core/utils/assets.dart';
 import 'package:flutter/material.dart';
 
 class UploadImageBox extends StatelessWidget {
-  const UploadImageBox({super.key});
+  final File? selectedImage;
+  final VoidCallback onTap;
+
+  const UploadImageBox({
+    super.key,
+    required this.selectedImage,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.4,
-      decoration: BoxDecoration(
-        color:const Color(0xffF1F1F1),
-        border: Border.all(
-          color: kSecondaryColor,
-          width: 1,
-        ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.55,
-            //height: 46,
-            child: Center(child: Image.asset(AssetsData.imageIcon)),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: double.infinity,
+        height: MediaQuery.of(context).size.height * 0.4,
+        decoration: BoxDecoration(
+          color: const Color(0xffF1F1F1),
+          border: Border.all(
+            color: kSecondaryColor,
+            width: 1,
           ),
-          const SizedBox(width: 10),
-          
-        ],
+        ),
+        child: selectedImage != null
+            ? ClipRRect(
+                child: SizedBox.expand(
+                  child: Image.file(
+                    selectedImage!,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    AssetsData.imageIcon,
+                    width: MediaQuery.of(context).size.width * 0.4,
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    "Tap to upload image",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ],
+              ),
       ),
     );
   }

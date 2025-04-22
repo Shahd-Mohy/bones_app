@@ -44,7 +44,7 @@ class PatientLoginViewBody extends StatelessWidget {
               ],
             ),
             const CustomTextFormField(
-              label: "Email or Phone",
+              label: "Email",
               hintText: "example@gmail.com..",
             ),
             // SizedBox(height: height * 0.02),
