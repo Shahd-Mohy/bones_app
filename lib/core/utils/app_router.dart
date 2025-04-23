@@ -1,3 +1,4 @@
+import 'package:bones_app/features/chat/presentation/view/chat_view.dart';
 import 'package:bones_app/features/forget_password/presentation/view/code_verification_view.dart';
 import 'package:bones_app/features/forget_password/presentation/view/reset_password_view.dart';
 import 'package:bones_app/features/patient_register/presentation/view/patient_register_view.dart';
@@ -12,6 +13,7 @@ import 'package:bones_app/features/report_generating/presentation/view/report_ge
 import 'package:bones_app/features/specalist_login/presentation/specalist_login_view.dart';
 import 'package:bones_app/features/specalist_register/presentation/specalist_register_view.dart';
 import 'package:bones_app/features/welcome/presentation/view/welcome_view.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 abstract class AppRouter {
@@ -29,6 +31,7 @@ abstract class AppRouter {
   static const kPaymentView = "/payment";
   static const kReportGeneratingView = '/reportGenerating';
   static const kConsultationView = '/consultation';
+  static const kChatView = '/chat';
 
   static final router = GoRouter(routes: [
     GoRoute(path: "/", builder: (context, state) => const WelcomeView()),
@@ -77,5 +80,6 @@ abstract class AppRouter {
     GoRoute(
         path: kConsultationView,
         builder: (context, state) => const ConsultationView()),
+    GoRoute(path: kChatView, builder: (context, state) => const ChatView()),
   ]);
 }

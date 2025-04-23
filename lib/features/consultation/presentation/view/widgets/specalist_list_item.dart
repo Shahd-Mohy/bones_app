@@ -1,6 +1,8 @@
 import 'package:bones_app/constants.dart';
+import 'package:bones_app/core/utils/app_router.dart';
 import 'package:bones_app/core/utils/assets.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SpecialistListItem extends StatelessWidget {
   const SpecialistListItem({super.key});
@@ -30,7 +32,7 @@ class SpecialistListItem extends StatelessWidget {
             Container(
               width: 90,
               height: 90,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.rectangle,
                 image: DecorationImage(
                   image: AssetImage(AssetsData.userImage),
@@ -46,7 +48,7 @@ class SpecialistListItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 6),
-                  Text(
+                  const Text(
                     "Dr. User",
                     style: TextStyle(
                       fontSize: 16,
@@ -88,15 +90,18 @@ class SpecialistListItem extends StatelessWidget {
               child: Container(
                 width: 55,
                 height: 55,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: kIconSoftGreyColor,
                   shape: BoxShape.circle,
                 ),
                 child: Center(
-                  child: Icon(
-                    Icons.chat_bubble_outline_rounded,
-                    size: 40, // Exact size
-                    color: Colors.black54,
+                  child: GestureDetector(
+                    onTap: () => GoRouter.of(context).push(AppRouter.kChatView),
+                    child: const Icon(
+                      Icons.chat_bubble_outline_rounded,
+                      size: 40, // Exact size
+                      color: Colors.black54,
+                    ),
                   ),
                 ),
               ),
