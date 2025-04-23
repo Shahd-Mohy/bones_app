@@ -8,7 +8,7 @@ class CustomSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.only(top: 5, bottom: 10),
+        padding: const EdgeInsets.only(top: 15, bottom: 10),
         child: Container(
           decoration: BoxDecoration(
             boxShadow: [

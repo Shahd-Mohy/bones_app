@@ -7,10 +7,11 @@ class SpecialistsListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 530,
       child: ListView.builder(
         padding: const EdgeInsets.symmetric(vertical: 10),
-        shrinkWrap: true,
+        physics:
+            const NeverScrollableScrollPhysics(), 
+        shrinkWrap: true, 
         itemCount: 10,
         itemBuilder: (context, index) {
           return const SpecialistListItem();
