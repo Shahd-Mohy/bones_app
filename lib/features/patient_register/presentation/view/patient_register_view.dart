@@ -33,7 +33,10 @@ class PatientRegisterView extends StatelessWidget {
       ),
       body: BlocProvider(
         create: (context) => PatientRegisterCubit(
-          patientRegisterRepo: PatientRegisterRepoImp(ApiService(Dio())),
+          patientRegisterRepo: PatientRegisterRepoImp(
+            Dio(),
+            apiService: ApiService(Dio()),
+          ),
         ),
         child: const PatientRegisterViewBody(),
       ),

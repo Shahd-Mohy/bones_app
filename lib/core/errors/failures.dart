@@ -7,26 +7,30 @@ abstract class Failure {
 }
 
 class ServerFailure extends Failure {
-  ServerFailure(super.errorMessage);
+  ServerFailure(super.errMessage);
 
+  
   factory ServerFailure.fromDioError(DioError dioError) {
-    switch (dioError.type) {
-      case DioErrorType.connectionTimeout:
-        return ServerFailure("Connection timeout with server.");
-      case DioErrorType.sendTimeout:
-        return ServerFailure("Send timeout with server.");
-      case DioErrorType.receiveTimeout:
-        return ServerFailure("Receive timeout with server.");
-      case DioErrorType.badCertificate:
-      case DioErrorType.badResponse:
-        return ServerFailure("Received invalid status code: ${dioError.response?.statusCode}");
-      case DioErrorType.cancel:
-        return ServerFailure("Request to server was cancelled.");
-      case DioErrorType.connectionError:
-        return ServerFailure("Connection error occurred.");
-      case DioErrorType.unknown:
-      default:
-        return ServerFailure("Unexpected error, please try again later.");
-    }
+  print('💥 DIO ERROR: ${dioError.toString()}');
+  print('💥 DIO ERROR RESPONSE DATA: ${dioError.response?.data}');
+
+  switch (dioError.type) {
+    case DioErrorType.connectionTimeout:
+    case DioErrorType.sendTimeout:
+    case DioErrorType.receiveTimeout:
+      return ServerFailure('Connection Timeout');
+    case DioErrorType.badResponse:
+      final statusCode = dioError.response?.statusCode;
+      final responseMessage = dioError.response?.data['message'] ?? 'Unexpected Error';
+      return ServerFailure(responseMessage);
+    case DioErrorType.cancel:
+      return ServerFailure('Request Cancelled');
+    case DioErrorType.connectionError:
+      return ServerFailure('No Internet Connection');
+    case DioErrorType.unknown:
+    default:
+      return ServerFailure('Unexpected Error, Please try again');
   }
+}
+
 }

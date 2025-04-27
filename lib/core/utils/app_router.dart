@@ -13,7 +13,6 @@ import 'package:bones_app/features/report_generating/presentation/view/report_ge
 import 'package:bones_app/features/specalist_login/presentation/specalist_login_view.dart';
 import 'package:bones_app/features/specalist_register/presentation/specalist_register_view.dart';
 import 'package:bones_app/features/welcome/presentation/view/welcome_view.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 abstract class AppRouter {

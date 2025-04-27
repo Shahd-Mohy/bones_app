@@ -6,29 +6,35 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
 class PatientRegisterRepoImp implements PatientRegisterRepo {
-  final ApiService apiService;
-  PatientRegisterRepoImp(this.apiService);
+  final Dio dio;
+
+  PatientRegisterRepoImp(this.dio, {required ApiService apiService}) {
+    dio.options.baseUrl = 'https://bones.runasp.net/'; // <-- BASE URL FIXED
+  }
+
   @override
-  Future<Either<Failure, PatientRegisterModel>> registerPatient(
-      {required String fullName,
-      required String email,
-      required String password,
-      required String confirmPassword,
-      required String role,
-      required String phoneNumber}) async {
+  Future<Either<Failure, PatientRegisterModel>> registerPatient({
+    required String fullName,
+    required String phoneNumber,
+    required String email,
+    required String password,
+    required String confirmPassword,
+    required String role,
+  }) async {
     try {
-      var data = await apiService.post(
-        endPoint: 'account/register',
-        data: {
+      final response = await dio.post(
+        'account/register', 
+        data: FormData.fromMap({
           'FullName': fullName,
+          'PhoneNumber': phoneNumber,
           'Email': email,
           'Password': password,
           'ConfirmPassword': confirmPassword,
           'Role': role,
-          'PhoneNumber': phoneNumber,
-        },
+        }),
       );
-      return right(PatientRegisterModel.fromjson(data));
+
+      return right(PatientRegisterModel.fromjson(response.data));
     } catch (e) {
       if (e is DioError) {
         return left(ServerFailure.fromDioError(e));
