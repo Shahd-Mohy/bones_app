@@ -6,19 +6,25 @@ class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     super.key,
     required this.hintText,
+    required this.label,
+    this.controller,
+    this.validator,
     this.preIcon,
     this.sufIcon,
     this.isobsecureText = false,
     this.imagePath,
-    required this.label,
+    this.keyboardType,
   });
 
   final String label;
   final String hintText;
+  final TextEditingController? controller;
+  final FormFieldValidator<String>? validator;
   final Icon? preIcon;
-  final Icon? sufIcon;
+  final Widget? sufIcon; 
   final bool isobsecureText;
   final String? imagePath;
+  final TextInputType? keyboardType;
 
   @override
   Widget build(BuildContext context) {
@@ -27,17 +33,21 @@ class CustomTextFormField extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label,
-              style: Styles.textStyle16.copyWith(fontWeight: FontWeight.w600)),
+          Text(
+            label,
+            style: Styles.textStyle16.copyWith(fontWeight: FontWeight.w600),
+          ),
           const SizedBox(height: 5),
           TextFormField(
+            controller: controller,
             obscureText: isobsecureText,
-            validator: (data) {
-              if (data!.isEmpty) {
+            validator: validator ?? (data) {
+              if (data == null || data.isEmpty) {
                 return "Field is required!";
               }
               return null;
             },
+            keyboardType: keyboardType,
             decoration: InputDecoration(
               filled: true,
               fillColor: kTextFieldColor,
@@ -61,7 +71,7 @@ class CustomTextFormField extends StatelessWidget {
                       ),
                     )
                   : preIcon,
-              suffixIcon: sufIcon,
+              suffixIcon: sufIcon, 
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide.none,
