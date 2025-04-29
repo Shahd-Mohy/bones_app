@@ -10,8 +10,8 @@ import 'package:bones_app/features/patent_login/presentation/view/patient_login_
 import 'package:bones_app/features/patient_home/presentation/view/patient_home_view.dart';
 import 'package:bones_app/features/payment/presentation/view/payment_view.dart';
 import 'package:bones_app/features/report_generating/presentation/view/report_generating_view.dart';
-import 'package:bones_app/features/specalist_login/presentation/specalist_login_view.dart';
-import 'package:bones_app/features/specalist_register/presentation/specalist_register_view.dart';
+import 'package:bones_app/features/specalist_login/presentation/view/specalist_login_view.dart';
+import 'package:bones_app/features/specalist_register/presentation/view/specalist_register_view.dart';
 import 'package:bones_app/features/welcome/presentation/view/welcome_view.dart';
 import 'package:go_router/go_router.dart';
 

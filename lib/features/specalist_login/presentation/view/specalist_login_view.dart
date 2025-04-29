@@ -1,6 +1,6 @@
 import 'package:bones_app/constants.dart';
 import 'package:bones_app/core/utils/styles.dart';
-import 'package:bones_app/features/specalist_login/presentation/widgets/specalist_login_view_body.dart';
+import 'package:bones_app/features/specalist_login/presentation/view/widgets/specalist_login_view_body.dart';
 import 'package:flutter/material.dart';
 
 class SpecalistLoginView extends StatelessWidget {

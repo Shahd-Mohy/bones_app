@@ -7,26 +7,32 @@ import 'package:dio/dio.dart';
 
 class PatientLoginRepoImp implements PatientLoginRepo {
   final Dio dio;
-  PatientLoginRepoImp(this.dio, {required ApiService apiService}) {
+  final ApiService apiService;
+
+  PatientLoginRepoImp(this.dio, {required this.apiService}) {
     dio.options.baseUrl = 'https://bones.runasp.net/';
   }
 
   @override
-  Future<Either<Failure, PatientLoginModel>> loginPatient(
-      {required String email,
-      required String password,
-      required String role}) async {
+  Future<Either<Failure, PatientLoginModel>> loginPatient({
+    required String email,
+    required String password,
+    required String role,
+  }) async {
     try {
       var response = await dio.post(
         'account/login',
         data: {
           'email': email,
           'password': password,
+          'role': role,
         },
       );
       return right(PatientLoginModel.fromjson(response.data));
-    } on Exception catch (e) {
-      return left(ServerFailure(e.toString()));
+    } on DioError catch (e) {
+      return left(ServerFailure.fromDioError(e));
+    } catch (e) {
+      return left(ServerFailure('Unexpected error, please try again.'));
     }
   }
 }

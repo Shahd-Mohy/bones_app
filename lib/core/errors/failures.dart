@@ -21,6 +21,16 @@ class ServerFailure extends Failure {
       return ServerFailure('Connection Timeout');
     case DioErrorType.badResponse:
       final statusCode = dioError.response?.statusCode;
+      final path = dioError.requestOptions.path;
+      
+      if (statusCode == 400) {
+        if (path.contains('login')) {
+          return ServerFailure('Invalid email or password');
+        } else if (path.contains('register')) {
+          return ServerFailure('Email already registered.');
+        }
+      }
+
       final responseMessage = dioError.response?.data['message'] ?? 'Unexpected Error';
       return ServerFailure(responseMessage);
     case DioErrorType.cancel:
@@ -32,5 +42,6 @@ class ServerFailure extends Failure {
       return ServerFailure('Unexpected Error, Please try again');
   }
 }
+
 
 }

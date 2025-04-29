@@ -16,18 +16,15 @@ class PatientLoginCubit extends Cubit<PatientLoginState> {
     required String password,
   }) async {
     emit(PatientLoginLoading());
-    try {
-      final result = await patientLoginRepo.loginPatient(
-        email: email,
-        password: password,
-        role: 'patient',
-      );
-      result.fold(
-          (Failure) => emit(PatientLoginFailure(Failure.errMessage)),
-          (PatientLoginModel) =>
-              emit(PatientLoginSuccess(patientLoginModel: PatientLoginModel)));
-    } catch (e) {
-      emit(PatientLoginFailure(e.toString()));
-    }
+    final result = await patientLoginRepo.loginPatient(
+      email: email,
+      password: password,
+      role: 'patient',
+    );
+
+    result.fold(
+      (failure) => emit(PatientLoginFailure(failure.errMessage)),
+      (patientLoginModel) => emit(PatientLoginSuccess(patientLoginModel: patientLoginModel)),
+    );
   }
 }

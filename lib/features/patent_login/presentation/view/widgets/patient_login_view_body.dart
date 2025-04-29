@@ -48,14 +48,14 @@ class _PatientLoginViewBodyState extends State<PatientLoginViewBody> {
         if (state is PatientLoginFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(state.errMessage),
+              content: Center(child: Text(state.errMessage.toString())),
               backgroundColor: Colors.red,
             ),
           );
         } else if (state is PatientLoginSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text("Login Successful"),
+              content: Center(child: Text("Login Successful")),
               backgroundColor: Colors.green,
             ),
           );

@@ -1,23 +1,31 @@
+import 'dart:io';
 import 'package:bones_app/constants.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
-class UploadCertificat extends StatefulWidget {
-  const UploadCertificat({super.key});
+class UploadCertificate extends StatefulWidget {
+  final void Function(File) onFilePicked;
+
+  const UploadCertificate({super.key, required this.onFilePicked});
 
   @override
-  State<UploadCertificat> createState() => _UploadCertificatState();
+  State<UploadCertificate> createState() => _UploadCertificateState();
 }
 
-class _UploadCertificatState extends State<UploadCertificat> {
+class _UploadCertificateState extends State<UploadCertificate> {
   String? selectedFileName;
 
   void _pickFile() async {
     final result = await FilePicker.platform.pickFiles();
     if (result != null) {
-      setState(() {
-        selectedFileName = result.files.single.name;
-      });
+      final path = result.files.single.path;
+      if (path != null) {
+        final file = File(path);
+        widget.onFilePicked(file); 
+        setState(() {
+          selectedFileName = result.files.single.name;
+        });
+      }
     }
   }
 
