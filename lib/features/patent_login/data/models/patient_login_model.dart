@@ -1,11 +1,31 @@
-
 class PatientLoginModel {
-  String jwtSecurityToken;
-  String expire;
-  PatientLoginModel({required this.jwtSecurityToken, required this.expire});
+  bool success;
+  String message;
+  Data data;
 
-  factory PatientLoginModel.fromjson(Map<String, dynamic> json) => PatientLoginModel(
-    expire: json['expire'] as String, 
-    jwtSecurityToken: json['jwtSecurityToken'] as String,
-  );
+  PatientLoginModel({
+    required this.success,
+    required this.message,
+    required this.data,
+  });
+  factory PatientLoginModel.fromjson(Map<String, dynamic> json) {
+    return PatientLoginModel(
+      success: json['success'],
+      message: json['message'],
+      data: Data(
+        token: json['data']['token'],
+        expire: DateTime.parse(json['data']['expire']),
+      ),
+    );
+  }
+}
+
+class Data {
+  String token;
+  DateTime expire;
+
+  Data({
+    required this.token,
+    required this.expire,
+  });
 }

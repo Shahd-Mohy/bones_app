@@ -14,18 +14,33 @@ class UploadCertificate extends StatefulWidget {
 
 class _UploadCertificateState extends State<UploadCertificate> {
   String? selectedFileName;
+  bool _isPickingFile = false; // Guard flag
 
   void _pickFile() async {
-    final result = await FilePicker.platform.pickFiles();
-    if (result != null) {
-      final path = result.files.single.path;
-      if (path != null) {
-        final file = File(path);
-        widget.onFilePicked(file); 
-        setState(() {
-          selectedFileName = result.files.single.name;
-        });
+    if (_isPickingFile) return; // Prevent multiple triggers
+
+    setState(() {
+      _isPickingFile = true;
+    });
+
+    try {
+      final result = await FilePicker.platform.pickFiles();
+      if (result != null) {
+        final path = result.files.single.path;
+        if (path != null) {
+          final file = File(path);
+          widget.onFilePicked(file);
+          setState(() {
+            selectedFileName = result.files.single.name;
+          });
+        }
       }
+    } catch (e) {
+      print('File picking failed: $e');
+    } finally {
+      setState(() {
+        _isPickingFile = false;
+      });
     }
   }
 
@@ -36,43 +51,57 @@ class _UploadCertificateState extends State<UploadCertificate> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Certification",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          SizedBox(height: 8),
+          const Text(
+            "Certification",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 8),
           GestureDetector(
             onTap: _pickFile,
             child: Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey),
                 borderRadius: BorderRadius.circular(12),
+                color: _isPickingFile ? Colors.grey.shade100 : null,
               ),
               child: Row(
                 children: [
                   Icon(Icons.upload_file, color: kSecondaryColor),
-                  SizedBox(width: 12),
+                  const SizedBox(width: 12),
                   Expanded(
                     child: Text(
+                      selectedFileName ?? "Upload your certification",
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      selectedFileName ?? "Upload your certification",
                       style: TextStyle(
-                          color: selectedFileName == null
-                              ? Colors.grey
-                              : Colors.black),
+                        color: selectedFileName == null
+                            ? Colors.grey
+                            : Colors.black,
+                      ),
                     ),
                   ),
+                  if (_isPickingFile) ...[
+                    const SizedBox(width: 8),
+                    const SizedBox(
+                      width: 16,
+                      height: 16,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                  ],
                 ],
               ),
             ),
           ),
           if (selectedFileName != null) ...[
-            SizedBox(height: 8),
-            Text("Selected: $selectedFileName",
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 12, color: Colors.grey)),
-          ]
+            const SizedBox(height: 8),
+            Text(
+              "Selected: $selectedFileName",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontSize: 12, color: Colors.grey),
+            ),
+          ],
         ],
       ),
     );

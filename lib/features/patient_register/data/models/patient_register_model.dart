@@ -1,7 +1,7 @@
 class PatientRegisterModel {
   bool success;
   String message;
-  String data;
+  Data data;
 
   PatientRegisterModel({
     required this.success,
@@ -9,10 +9,27 @@ class PatientRegisterModel {
     required this.data,
   });
 
-  factory PatientRegisterModel.fromjson(Map<String, dynamic> json) =>
-      PatientRegisterModel(
-        success: json['success'] as bool,
-        message: json['message'] as String,
-        data: json['data'] as String,
-      );
+  factory PatientRegisterModel.fromJson(Map<String, dynamic> json) {
+    return PatientRegisterModel(
+      success: json['success'] as bool,
+      message: json['message'] as String,
+      data: json['data'] as Data,
+    );
+  }
+}
+
+class Data {
+  int id;
+  String name;
+  String email;
+  String userId;
+  int freeLimit;
+
+  Data({
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.userId,
+    required this.freeLimit,
+  });
 }

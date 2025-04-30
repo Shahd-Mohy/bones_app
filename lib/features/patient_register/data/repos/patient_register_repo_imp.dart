@@ -23,7 +23,7 @@ class PatientRegisterRepoImp implements PatientRegisterRepo {
   }) async {
     try {
       final response = await dio.post(
-        'account/register', 
+        'Account/Register',
         data: FormData.fromMap({
           'FullName': fullName,
           'PhoneNumber': phoneNumber,
@@ -34,7 +34,7 @@ class PatientRegisterRepoImp implements PatientRegisterRepo {
         }),
       );
 
-      return right(PatientRegisterModel.fromjson(response.data));
+      return right(PatientRegisterModel.fromJson(response.data));
     } catch (e) {
       if (e is DioError) {
         return left(ServerFailure.fromDioError(e));

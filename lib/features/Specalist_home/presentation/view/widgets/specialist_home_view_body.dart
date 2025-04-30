@@ -39,78 +39,80 @@ class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: MediaQuery.of(context).size.height - kToolbarHeight,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
-        child: Center(
-          child: Column(
-            children: [
-              UploadImageBox(
-                selectedImage: selectedImage,
-                onTap: _pickImage,
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.01,
-              ),
-              const Spacer(),
-              Row(
-                children: [
-                  const Spacer(),
-                  const Icon(
-                    Clarity.camera_solid,
-                    size: 30,
-                    color: kSecondaryColor,
-                  ),
-                  SizedBox(width: MediaQuery.of(context).size.width * 0.08),
-                  CustomMidButton(
-                    title: "Upload Image",
-                    onPressed: _pickImage,
-                  ),
-                ],
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-              Row(
-                children: [
-                  CustomMidButton(
-                    title: "Retrive Image",
-                    onPressed: () {},
-                  ),
-                  SizedBox(width: MediaQuery.of(context).size.width * 0.08),
-                  const Icon(
-                    Clarity.backup_restore_solid,
-                    size: 30,
-                    color: kSecondaryColor,
-                  ),
-                  const Spacer(),
-                ],
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-              Row(
-                children: [
-                  const Spacer(),
-                  const Icon(
-                    Icons.feedback_outlined,
-                    size: 30,
-                    color: kSecondaryColor,
-                  ),
-                  SizedBox(width: MediaQuery.of(context).size.width * 0.08),
-                  CustomMidButton(
-                    title: "Give FeedBack",
-                    onPressed: () =>
-                        GoRouter.of(context).push(AppRouter.kConsultationView),
-                  ),
-                ],
-              ),
-              Spacer(),
-              CustomMidButton(
-                title: "Next",
-                width: 348,
-                onPressed: () =>
-                    GoRouter.of(context).push(AppRouter.kReportGeneratingView),
-              )
-            ],
+    return SingleChildScrollView(
+      child: SizedBox(
+        width: double.infinity,
+        height: MediaQuery.of(context).size.height - kToolbarHeight,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
+          child: Center(
+            child: Column(
+              children: [
+                UploadImageBox(
+                  selectedImage: selectedImage,
+                  onTap: _pickImage,
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
+                ),
+                const Spacer(),
+                Row(
+                  children: [
+                    const Spacer(),
+                    const Icon(
+                      Clarity.camera_solid,
+                      size: 30,
+                      color: kSecondaryColor,
+                    ),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.08),
+                    CustomMidButton(
+                      title: "Upload Image",
+                      onPressed: _pickImage,
+                    ),
+                  ],
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                Row(
+                  children: [
+                    CustomMidButton(
+                      title: "Retrive Image",
+                      onPressed: () {},
+                    ),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.08),
+                    const Icon(
+                      Clarity.backup_restore_solid,
+                      size: 30,
+                      color: kSecondaryColor,
+                    ),
+                    const Spacer(),
+                  ],
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                Row(
+                  children: [
+                    const Spacer(),
+                    const Icon(
+                      Icons.feedback_outlined,
+                      size: 30,
+                      color: kSecondaryColor,
+                    ),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.08),
+                    CustomMidButton(
+                      title: "Give FeedBack",
+                      onPressed: () =>
+                          GoRouter.of(context).push(AppRouter.kConsultationView),
+                    ),
+                  ],
+                ),
+                Spacer(),
+                CustomMidButton(
+                  title: "Next",
+                  width: 348,
+                  onPressed: () =>
+                      GoRouter.of(context).push(AppRouter.kReportGeneratingView),
+                )
+              ],
+            ),
           ),
         ),
       ),

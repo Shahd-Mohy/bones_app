@@ -1,7 +1,7 @@
 class SpecialistRegisterModel {
-  final bool success;
-  final String message;
-  final String data;
+  bool success;
+  String message;
+  Data data;
 
   SpecialistRegisterModel({
     required this.success,
@@ -13,8 +13,23 @@ class SpecialistRegisterModel {
     return SpecialistRegisterModel(
       success: json['success'] as bool,
       message: json['message'] as String,
-      data: json['data'] as String,
+      data: json['data'] as Data,
     );
   }
 }
 
+class Data {
+  int id;
+  String name;
+  String email;
+  String userId;
+  int freeLimit;
+
+  Data({
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.userId,
+    required this.freeLimit,
+  });
+}

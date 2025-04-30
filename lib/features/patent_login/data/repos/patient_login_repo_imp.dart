@@ -21,7 +21,7 @@ class PatientLoginRepoImp implements PatientLoginRepo {
   }) async {
     try {
       var response = await dio.post(
-        'account/login',
+        'Account/Login',
         data: {
           'email': email,
           'password': password,
@@ -32,6 +32,7 @@ class PatientLoginRepoImp implements PatientLoginRepo {
     } on DioError catch (e) {
       return left(ServerFailure.fromDioError(e));
     } catch (e) {
+      print('💥 Error: $e');
       return left(ServerFailure('Unexpected error, please try again.'));
     }
   }
