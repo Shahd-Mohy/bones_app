@@ -55,7 +55,7 @@ class _PatientLoginViewBodyState extends State<PatientLoginViewBody> {
         } else if (state is PatientLoginSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Center(child: Text("Login Successful")),
+              content: Center(child: Text("Welcome to our App")),
               backgroundColor: Colors.green,
             ),
           );

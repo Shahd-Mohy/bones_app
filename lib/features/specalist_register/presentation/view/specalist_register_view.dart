@@ -1,4 +1,5 @@
 import 'package:bones_app/constants.dart';
+import 'package:bones_app/core/networking/api_services.dart';
 import 'package:bones_app/core/utils/styles.dart';
 import 'package:bones_app/features/specalist_register/data/repos/specialist_register_repo_imp.dart';
 import 'package:bones_app/features/specalist_register/presentation/view/widgets/specalist_register_view_body.dart';
@@ -31,7 +32,10 @@ class SpecalistRegisterView extends StatelessWidget {
         ),
         body: BlocProvider(
           create: (context) => SpecialistRegisterCubit(
-            specialistRegisterRepo: SpecialistRegisterRepoImp(dio: Dio()),
+            specialistRegisterRepo: SpecialistRegisterRepoImp(
+              Dio(),
+              apiService: ApiService(Dio()),
+            ),
           ),
           child: const SpecalistRegisterViewBody(),
         ));

@@ -39,18 +39,18 @@ class _SpecalistRegisterViewBodyState extends State<SpecalistRegisterViewBody> {
         if (state is SpecialistRegisterFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(state.errorMessage),
+              content: Center(child: Text(state.errorMessage)),
               backgroundColor: Colors.red,
             ),
           );
         } else if (state is SpecialistRegisterSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text("Welcome to our app"),
+              content: Center(child: Text("Welcome to our app")),
               backgroundColor: Colors.green,
             ),
           );
-          GoRouter.of(context).push(AppRouter.kSpecalistRegisterView);
+          GoRouter.of(context).push(AppRouter.kSpecialistHomeView);
         }
       },
       builder: (context, state) {
@@ -77,6 +77,7 @@ class _SpecalistRegisterViewBodyState extends State<SpecalistRegisterViewBody> {
                     label: "Phone Number",
                     hintText: "Enter your phone number",
                     controller: phoneNumberController,
+                    keyboardType: TextInputType.phone,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your phone number';

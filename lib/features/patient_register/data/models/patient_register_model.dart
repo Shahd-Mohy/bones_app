@@ -17,7 +17,7 @@ class PatientRegisterModel {
     );
   }
 }
-
+ 
 class Data {
   int id;
   String name;

@@ -67,8 +67,10 @@ class _PatientRegisterViewBodyState extends State<PatientRegisterViewBody> {
         } else if (state is PatientRegisterFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(
-                state.errMessage.toString(),
+              content: Center(
+                child: Text(
+                  state.errMessage.toString(),
+                ),
               ),
               backgroundColor: Colors.red,
             ),
@@ -184,12 +186,12 @@ class _PatientRegisterViewBodyState extends State<PatientRegisterViewBody> {
                     },
                   ),
                   const SizedBox(height: 40),
-                  state is PatientRegisterLoading
-                      ? const Center(child: CircularProgressIndicator())
-                      : CustomLargeButton(
-                          title: "Sign Up",
-                          onPressed: () => _onSignUpPressed(context),
-                        ),
+                  CustomLargeButton(
+                    title: state is PatientRegisterLoading
+                        ? "Loading..."
+                        : "Sign Up",
+                    onPressed: () => _onSignUpPressed(context),
+                  ),
                   const SizedBox(height: 15),
                   Center(
                     child: SizedBox(

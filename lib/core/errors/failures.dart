@@ -37,6 +37,7 @@ class ServerFailure extends Failure {
           return ServerFailure(responseData['message']);
         }
 
+        print('Unexpected server error: ${dioError.response?.data}');
         return ServerFailure(
             'Unexpected server error: ${dioError.response?.data}');
 
