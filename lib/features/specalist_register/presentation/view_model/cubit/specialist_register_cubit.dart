@@ -28,7 +28,7 @@ class SpecialistRegisterCubit extends Cubit<SpecialistRegisterState> {
         email: email,
         password: password,
         confirmPassword: confirmPassword,
-        role: 'Specialist',
+        role: 'specialist',
         certificateFile: certificateFile,
       );
       result.fold(

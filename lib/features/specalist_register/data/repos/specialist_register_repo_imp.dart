@@ -22,7 +22,7 @@ class SpecialistRegisterRepoImp implements SpecialistRegisterRepo {
       required File certificateFile}) async {
     try {
       final response = await dio.post(
-        'account/register',
+        'Account/register',
         data: FormData.fromMap({
           'FullName': fullName,
           'PhoneNumber': phoneNumber,
@@ -41,3 +41,4 @@ class SpecialistRegisterRepoImp implements SpecialistRegisterRepo {
     }
   }
 }
+

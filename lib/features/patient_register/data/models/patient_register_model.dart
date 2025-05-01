@@ -13,7 +13,7 @@ class PatientRegisterModel {
     return PatientRegisterModel(
       success: json['success'] as bool,
       message: json['message'] as String,
-      data: json['data'] as Data,
+      data: Data.fromJson(json['data']),
     );
   }
 }
@@ -32,4 +32,14 @@ class Data {
     required this.userId,
     required this.freeLimit,
   });
+
+  factory Data.fromJson(Map<String, dynamic> json) {
+    return Data(
+      id: json['id'],
+      name: json['name'],
+      email: json['email'],
+      userId: json['userId'],
+      freeLimit: json['freeLimit'],
+    );
+  }
 }

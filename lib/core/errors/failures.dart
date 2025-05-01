@@ -28,8 +28,6 @@ class ServerFailure extends Failure {
         if (statusCode == 400) {
           if (path.contains('login')) {
             return ServerFailure('Invalid email or password');
-          } else if (path.contains('register')) {
-            return ServerFailure('Email already registered.');
           }
         }
 
