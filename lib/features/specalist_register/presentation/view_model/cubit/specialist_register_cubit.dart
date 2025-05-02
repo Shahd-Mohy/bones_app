@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:bones_app/core/utils/shared_prefs_helper.dart';
 import 'package:bones_app/features/specalist_register/data/models/specialist_register_model.dart';
 import 'package:bones_app/features/specalist_register/data/repos/spacialist_register_repo.dart';
 import 'package:meta/meta.dart';
@@ -33,8 +34,13 @@ class SpecialistRegisterCubit extends Cubit<SpecialistRegisterState> {
       );
       result.fold(
           (Failure) => emit(SpecialistRegisterFailure(Failure.errMessage)),
-          (SpecialistRegisterModel) => emit(SpecialistRegisterSuccess(
-              specialistRegisterModel: SpecialistRegisterModel)));
+          (SpecialistRegisterModel) async {
+        await SharedPrefsHelper.saveUserId(
+            SpecialistRegisterModel.data.id.toString());
+
+        emit(SpecialistRegisterSuccess(
+            specialistRegisterModel: SpecialistRegisterModel));
+      });
     } catch (e) {
       emit(SpecialistRegisterFailure(e.toString()));
     }

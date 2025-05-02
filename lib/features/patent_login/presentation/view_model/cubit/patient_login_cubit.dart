@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:bones_app/core/utils/shared_prefs_helper.dart';
 import 'package:bones_app/features/patent_login/data/models/patient_login_model.dart';
 import 'package:bones_app/features/patent_login/data/repos/patient_login_repo.dart';
 import 'package:meta/meta.dart';
@@ -24,7 +25,11 @@ class PatientLoginCubit extends Cubit<PatientLoginState> {
 
     result.fold(
       (failure) => emit(PatientLoginFailure(failure.errMessage)),
-      (patientLoginModel) => emit(PatientLoginSuccess(patientLoginModel: patientLoginModel)),
+      (patientLoginModel) async {
+    // await SharedPrefsHelper.clearUserId(); // 👈 Add here
+    // await SharedPrefsHelper.saveUserId(patientLoginModel.data.id.toString()); // 👈 And here
+    emit(PatientLoginSuccess(patientLoginModel: patientLoginModel));
+  },
     );
   }
 }
