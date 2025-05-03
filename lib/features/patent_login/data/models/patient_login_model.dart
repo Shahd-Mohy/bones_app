@@ -15,6 +15,7 @@ class PatientLoginModel {
       data: Data(
         token: json['data']['token'],
         expire: DateTime.parse(json['data']['expire']),
+        userId: json['data']['userId'],
       ),
     );
   }
@@ -23,9 +24,7 @@ class PatientLoginModel {
 class Data {
   String token;
   DateTime expire;
+  String userId;
 
-  Data({
-    required this.token,
-    required this.expire,
-  });
+  Data({required this.token, required this.expire, required this.userId});
 }

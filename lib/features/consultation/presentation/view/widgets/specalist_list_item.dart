@@ -5,7 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class SpecialistListItem extends StatelessWidget {
-  const SpecialistListItem({super.key});
+  final String name;
+  final String email;
+
+  const SpecialistListItem({
+    super.key,
+    required this.name,
+    required this.email,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +25,7 @@ class SpecialistListItem extends StatelessWidget {
           Container(
             width: width,
             height: heigth,
-            padding:
-                const EdgeInsets.only(left: 5, right: 5, top: 10, bottom: 5),
+            padding: const EdgeInsets.only(left: 5, right: 5, top: 10, bottom: 5),
             decoration: const BoxDecoration(
               color: kPrimaryColor,
             ),
@@ -44,9 +50,9 @@ class SpecialistListItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 6),
-                      const Text(
-                        "Dr. User",
-                        style: TextStyle(
+                      Text(
+                        name,
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: Colors.black,
@@ -54,7 +60,7 @@ class SpecialistListItem extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        "User@gmail.com",
+                        email,
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.grey[700],
