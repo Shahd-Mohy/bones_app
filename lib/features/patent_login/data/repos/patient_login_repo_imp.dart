@@ -28,7 +28,7 @@ class PatientLoginRepoImp implements PatientLoginRepo {
           'role': role,
         },
       );
-      return right(PatientLoginModel.fromjson(response.data));
+      return right(PatientLoginModel.fromJson(response.data));
     } on DioError catch (e) {
       return left(ServerFailure.fromDioError(e));
     } catch (e) {

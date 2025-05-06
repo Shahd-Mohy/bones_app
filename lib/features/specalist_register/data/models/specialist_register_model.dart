@@ -23,7 +23,7 @@ class Data {
   String name;
   String email;
   String userId;
-  String phoneNumber;
+  String? phoneNumber;
 
   Data({
     required this.id,

@@ -17,13 +17,14 @@ class PatientRegisterModel {
     );
   }
 }
- 
+
 class Data {
   int id;
   String name;
   String email;
   String userId;
   int freeLimit;
+  String phoneNumber;
 
   Data({
     required this.id,
@@ -31,6 +32,7 @@ class Data {
     required this.email,
     required this.userId,
     required this.freeLimit,
+    required this.phoneNumber,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) {
@@ -40,6 +42,7 @@ class Data {
       email: json['email'],
       userId: json['userId'],
       freeLimit: json['freeLimit'],
+      phoneNumber: json['phoneNumber'],
     );
   }
 }
