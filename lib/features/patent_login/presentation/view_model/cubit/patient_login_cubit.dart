@@ -26,8 +26,8 @@ class PatientLoginCubit extends Cubit<PatientLoginState> {
     result.fold(
       (failure) => emit(PatientLoginFailure(failure.errMessage)),
       (patientLoginModel) async {
-    await SharedPrefsHelper.clearUserId(); // 👈 Add here
-    await SharedPrefsHelper.saveUserId(patientLoginModel.data.userId.toString()); // 👈 And here
+    await SharedPrefsHelper.clearUserId(); 
+    await SharedPrefsHelper.saveUserId(patientLoginModel.data.userData.id.toString()); 
     emit(PatientLoginSuccess(patientLoginModel: patientLoginModel));
   },
     );

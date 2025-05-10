@@ -11,17 +11,18 @@ class ImageUploadService {
   Future<Response> uploadImage({
     required File imageFile,
     required String userId,
+    required String bodyPart, // ✅ Add body part
   }) async {
     String fileName = imageFile.path.split('/').last;
 
     FormData formData = FormData.fromMap({
       "UserId": userId,
+      "BodyPart": bodyPart, // ✅ Send body part to backend
       "ImageFile": await MultipartFile.fromFile(
         imageFile.path,
         filename: fileName,
       ),
-      "UploadedAt":
-          DateTime.now().toIso8601String(), 
+      "UploadedAt": DateTime.now().toIso8601String(),
     });
 
     try {

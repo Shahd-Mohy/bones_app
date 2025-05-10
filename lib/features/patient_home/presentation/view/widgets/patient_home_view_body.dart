@@ -27,6 +27,17 @@ class _PatientHomeViewBodyState extends State<PatientHomeViewBody> {
     imageUploadService = ImageUploadService(dio: Dio());
   }
 
+  String? selectedBodyPart;
+  final List<String> bodyParts = [
+    'Hand',
+    'Arm',
+    'Shoulder',
+    'Finger',
+    'Elbow',
+    'Humerus',
+    'Forearm',
+    'Wrist',
+  ];
   File? selectedImage;
   bool ispicking = false;
   void _pickImage() async {
@@ -42,36 +53,60 @@ class _PatientHomeViewBodyState extends State<PatientHomeViewBody> {
           selectedImage = imageFile;
         });
 
-        // ✅ Retrieve userId
         final userId = await SharedPrefsHelper.getUserId();
         if (userId == null) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-                content: Text('User ID not found. Please log in again.')),
+              content: Center(
+                  child: Text('User ID not found. Please log in again.')),
+              backgroundColor: Colors.red,
+            ),
           );
           return;
         }
 
-        // ✅ Upload image
+        if (selectedBodyPart == null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Center(child: Text('Please select a body part.')),
+              backgroundColor: Colors.red,
+            ),
+          );
+          return;
+        }
+
         final response = await imageUploadService.uploadImage(
           imageFile: imageFile,
           userId: userId,
+          bodyPart: selectedBodyPart!,
         );
 
         if (response.statusCode == 200) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Image uploaded successfully!')),
+            const SnackBar(
+              content: Center(child: Text('Image uploaded successfully!')),
+              backgroundColor: Colors.green,
+            ),
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Upload failed: ${response.statusMessage}')),
+            SnackBar(
+              content: Center(
+                child: Text(
+                    'Upload failed: ${response.data["message"] ?? response.statusMessage}'),
+              ),
+              backgroundColor: Colors.red,
+            ),
           );
         }
       }
     } catch (e) {
       debugPrint('File picker or upload error: $e');
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Something went wrong while uploading.')),
+        const SnackBar(
+          content: Center(child: Text('Something went wrong while uploading.')),
+          backgroundColor: Colors.red,
+        ),
       );
     } finally {
       ispicking = false;
@@ -113,6 +148,38 @@ class _PatientHomeViewBodyState extends State<PatientHomeViewBody> {
                   ],
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: kSecondaryColor),
+                      ),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          isExpanded: true,
+                          hint: const Text("Choose a body part"),
+                          value: selectedBodyPart,
+                          items: bodyParts.map((part) {
+                            return DropdownMenuItem<String>(
+                              value: part,
+                              child: Text(part),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              selectedBodyPart = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                 Row(
                   children: [
                     CustomMidButton(
@@ -147,11 +214,35 @@ class _PatientHomeViewBodyState extends State<PatientHomeViewBody> {
                 ),
                 const Spacer(),
                 CustomMidButton(
-                  title: "View report",
+                  title: "View Report",
                   width: 348,
-                  onPressed: () => GoRouter.of(context)
-                      .push(AppRouter.kReportGeneratingView),
-                )
+                  onPressed: () {
+                    if (selectedImage == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Center(
+                              child:
+                                  Text('You need to upload an image first.')),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                      return;
+                    }
+
+                    if (selectedBodyPart == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content:
+                              Center(child: Text('Please select a body part.')),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                      return;
+                    }
+
+                    GoRouter.of(context).push(AppRouter.kReportGeneratingView);
+                  },
+                ),
               ],
             ),
           ),
