@@ -9,6 +9,7 @@ import 'package:bones_app/features/get_started/presentation/view/get_started_vie
 import 'package:bones_app/features/patent_login/presentation/view/patient_login_view.dart';
 import 'package:bones_app/features/patient_home/presentation/view/patient_home_view.dart';
 import 'package:bones_app/features/payment/presentation/view/payment_view.dart';
+import 'package:bones_app/features/profile/presentation/view/profile_view.dart';
 import 'package:bones_app/features/report_generating/presentation/view/report_generating_view.dart';
 import 'package:bones_app/features/specalist_login/presentation/view/specalist_login_view.dart';
 import 'package:bones_app/features/specalist_register/presentation/view/specalist_register_view.dart';
@@ -31,6 +32,7 @@ abstract class AppRouter {
   static const kReportGeneratingView = '/reportGenerating';
   static const kConsultationView = '/consultation';
   static const kChatView = '/chat';
+  static const kProfileView = '/profile';
 
   static final router = GoRouter(routes: [
     GoRoute(path: "/", builder: (context, state) => const WelcomeView()),
@@ -80,5 +82,7 @@ abstract class AppRouter {
         path: kConsultationView,
         builder: (context, state) => const ConsultationView()),
     GoRoute(path: kChatView, builder: (context, state) => const ChatView()),
+    GoRoute(
+        path: kProfileView, builder: (context, state) => const ProfileView()),
   ]);
 }
