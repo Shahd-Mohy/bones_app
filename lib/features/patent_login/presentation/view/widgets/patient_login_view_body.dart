@@ -20,7 +20,6 @@ class _PatientLoginViewBodyState extends State<PatientLoginViewBody> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  bool _rememberMe = false;
   bool _isPasswordVisible = false;
 
   @override
@@ -59,7 +58,7 @@ class _PatientLoginViewBodyState extends State<PatientLoginViewBody> {
               backgroundColor: Colors.green,
             ),
           );
-          GoRouter.of(context).pushReplacement(AppRouter.kPatientHomeView);
+          GoRouter.of(context).push(AppRouter.kPatientHomeView);
         }
       },
       builder: (context, state) {
@@ -72,33 +71,6 @@ class _PatientLoginViewBodyState extends State<PatientLoginViewBody> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: height * 0.03),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      CheckboxTheme(
-                        data: CheckboxThemeData(
-                          side:
-                              const BorderSide(width: 0.5, color: Colors.black),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                        ),
-                        child: Checkbox(
-                          value: _rememberMe,
-                          onChanged: (value) {
-                            setState(() {
-                              _rememberMe = value ?? false;
-                            });
-                          },
-                        ),
-                      ),
-                      Text(
-                        "Remember me",
-                        style:
-                            Styles.notesTextStyle.copyWith(color: Colors.black),
-                      ),
-                    ],
-                  ),
                   CustomTextFormField(
                     controller: _emailController,
                     label: "Email",

@@ -36,9 +36,8 @@ class PatientHomeView extends StatelessWidget {
                 },
                 child: CircleAvatar(
                   maxRadius: 18,
-                  child: Image.asset(AssetsData.userImage),
-                  //backgroundImage: const
                   backgroundColor: kSecondaryColor.withOpacity(0.2),
+                  child: Image.asset(AssetsData.userImage),
                 ),
               ),
             ),

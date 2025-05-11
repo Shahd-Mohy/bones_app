@@ -11,19 +11,25 @@ class ImageUploadService {
   Future<Response> uploadImage({
     required File imageFile,
     required String userId,
-    required String bodyPart, // ✅ Add body part
+    required String bodyPart,
   }) async {
     String fileName = imageFile.path.split('/').last;
 
     FormData formData = FormData.fromMap({
-      "UserId": userId,
-      "BodyPart": bodyPart, // ✅ Send body part to backend
-      "ImageFile": await MultipartFile.fromFile(
-        imageFile.path,
-        filename: fileName,
-      ),
-      "UploadedAt": DateTime.now().toIso8601String(),
+      "Id": int.parse(userId),
+      "BodyPart": bodyPart,
+      "UploadedAt":
+          DateTime.now().toUtc().toIso8601String().substring(0, 23) + 'Z',
+      "ImageFiles": [
+        await MultipartFile.fromFile(imageFile.path, filename: fileName)
+      ],
     });
+
+    print('FormData being sent:');
+    print('UserId: $userId');
+    print('BodyPart: $bodyPart');
+    print('UploadedAt: ${DateTime.now().toUtc().toIso8601String()}');
+    print('ImageFiles: ${imageFile.path}');
 
     try {
       final response = await dio.post(
@@ -31,11 +37,15 @@ class ImageUploadService {
         data: formData,
         options: Options(
           contentType: 'multipart/form-data',
+          headers: {
+            'Accept': 'application/json',
+          },
         ),
       );
+
       return response;
     } on DioException catch (e) {
-      debugPrint("Upload failed: ${e.response?.data}");
+      debugPrint("Upload failed Deee: ${e.response?.data}");
       return e.response!;
     }
   }

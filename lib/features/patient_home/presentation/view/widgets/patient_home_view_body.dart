@@ -78,13 +78,15 @@ class _PatientHomeViewBodyState extends State<PatientHomeViewBody> {
         final response = await imageUploadService.uploadImage(
           imageFile: imageFile,
           userId: userId,
-          bodyPart: selectedBodyPart!,
+          bodyPart: selectedBodyPart!.toLowerCase(),
         );
 
         if (response.statusCode == 200) {
+          final result = response.data["data"][0]["data"];
+          debugPrint("Model result: $result");
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Center(child: Text('Image uploaded successfully!')),
+            SnackBar(
+              content: Text('Upload complete!\nStatus: ${result["status"]}'),
               backgroundColor: Colors.green,
             ),
           );

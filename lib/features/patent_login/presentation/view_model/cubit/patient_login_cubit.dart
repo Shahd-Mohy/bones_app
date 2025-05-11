@@ -17,19 +17,24 @@ class PatientLoginCubit extends Cubit<PatientLoginState> {
     required String password,
   }) async {
     emit(PatientLoginLoading());
-    final result = await patientLoginRepo.loginPatient(
-      email: email,
-      password: password,
-      role: 'patient',
-    );
+    try {
+      final result = await patientLoginRepo.loginPatient(
+        email: email,
+        password: password,
+        role: 'patient',
+      );
 
-    result.fold(
-      (failure) => emit(PatientLoginFailure(failure.errMessage)),
-      (patientLoginModel) async {
-    await SharedPrefsHelper.clearUserId(); 
-    await SharedPrefsHelper.saveUserId(patientLoginModel.data.userData.id.toString()); 
-    emit(PatientLoginSuccess(patientLoginModel: patientLoginModel));
-  },
-    );
+      result.fold(
+        (failure) => emit(PatientLoginFailure(failure.errMessage)),
+        (patientLoginModel) async {
+          await SharedPrefsHelper.clearUserId();
+          await SharedPrefsHelper.saveUserId(
+              patientLoginModel.data.userData.id.toString());
+          emit(PatientLoginSuccess(patientLoginModel: patientLoginModel));
+        },
+      );
+    } catch (e) {
+      emit(PatientLoginFailure(e.toString()));
+    }
   }
 }

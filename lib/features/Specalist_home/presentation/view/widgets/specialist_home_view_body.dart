@@ -4,7 +4,6 @@ import 'package:bones_app/constants.dart';
 import 'package:bones_app/core/networking/upload_image_service.dart';
 import 'package:bones_app/core/utils/app_router.dart';
 import 'package:bones_app/core/utils/shared_prefs_helper.dart';
-import 'package:bones_app/core/utils/styles.dart';
 import 'package:bones_app/core/widgets/custom_mid_button.dart';
 import 'package:bones_app/core/widgets/upload_image_box.dart';
 import 'package:dio/dio.dart';
@@ -152,12 +151,6 @@ class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Text('Select a Body Part:',
-                          style: Styles.textStyle16),
-                    ),
-                    SizedBox(height: 8),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12.0),
                       decoration: BoxDecoration(
@@ -221,7 +214,7 @@ class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
                 ),
                 Spacer(),
                 CustomMidButton(
-                  title: "Next",
+                  title: "View Report",
                   width: 348,
                   onPressed: () {
                     if (selectedImage == null) {
