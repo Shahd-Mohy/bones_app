@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:bones_app/core/utils/shared_prefs_helper.dart';
 import 'package:bones_app/features/specalist_login/data/models/specialist_login_model.dart';
 import 'package:bones_app/features/specalist_login/data/repos/specialist_login_repo.dart';
 import 'package:meta/meta.dart';
@@ -22,7 +23,12 @@ class SpecialistLoginCubit extends Cubit<SpecialistLoginState> {
       role: 'specialist',
     );
     result.fold((Failure) => emit(SpecialistLoginFailure(Failure.errMessage)),
-        (SpecialistLoginModel) {
+        (SpecialistLoginModel) async {
+      await SharedPrefsHelper.clearUserId();
+      await SharedPrefsHelper.saveUserId(
+          SpecialistLoginModel.data.userData.id.toString());
+      final token = SpecialistLoginModel.data.token;
+      await SharedPrefsHelper.saveToken(token);
       emit(SpecialistLoginSuccess(specialistLoginModel: SpecialistLoginModel));
     });
   }

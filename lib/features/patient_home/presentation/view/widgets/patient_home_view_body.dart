@@ -86,7 +86,7 @@ class _PatientHomeViewBodyState extends State<PatientHomeViewBody> {
           debugPrint("Model result: $result");
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Upload complete!\nStatus: ${result["status"]}'),
+              content: Center(child: Text('Upload complete!\nStatus: ${result["status"]}')),
               backgroundColor: Colors.green,
             ),
           );

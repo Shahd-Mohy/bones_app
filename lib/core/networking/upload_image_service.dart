@@ -1,7 +1,7 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ImageUploadService {
   final Dio dio;
@@ -15,6 +15,13 @@ class ImageUploadService {
   }) async {
     String fileName = imageFile.path.split('/').last;
 
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('auth_token');
+
+    if (token == null) {
+      throw Exception('Auth token not found.');
+    }
+
     FormData formData = FormData.fromMap({
       "Id": int.parse(userId),
       "BodyPart": bodyPart,
@@ -25,11 +32,12 @@ class ImageUploadService {
       ],
     });
 
-    print('FormData being sent:');
-    print('UserId: $userId');
+    print('Sending FormData:');
+    print('Id: $userId');
     print('BodyPart: $bodyPart');
     print('UploadedAt: ${DateTime.now().toUtc().toIso8601String()}');
-    print('ImageFiles: ${imageFile.path}');
+    print('ImageFile: $fileName');
+    print('Token: Bearer $token');
 
     try {
       final response = await dio.post(
@@ -39,13 +47,14 @@ class ImageUploadService {
           contentType: 'multipart/form-data',
           headers: {
             'Accept': 'application/json',
+            'Authorization': 'Bearer $token', 
           },
         ),
       );
 
       return response;
     } on DioException catch (e) {
-      debugPrint("Upload failed Deee: ${e.response?.data}");
+      debugPrint("Upload failed: ${e.response?.data}");
       return e.response!;
     }
   }

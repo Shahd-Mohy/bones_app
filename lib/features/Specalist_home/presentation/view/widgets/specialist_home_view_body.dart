@@ -42,7 +42,7 @@ class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
 
   File? selectedImage;
   bool ispicking = false;
-  void _pickImage() async {
+    void _pickImage() async {
     if (ispicking) return;
     ispicking = true;
 
@@ -80,13 +80,15 @@ class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
         final response = await imageUploadService.uploadImage(
           imageFile: imageFile,
           userId: userId,
-          bodyPart: selectedBodyPart!,
+          bodyPart: selectedBodyPart!.toLowerCase(),
         );
 
         if (response.statusCode == 200) {
+          final result = response.data["data"][0]["data"];
+          debugPrint("Model result: $result");
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Center(child: Text('Image uploaded successfully!')),
+            SnackBar(
+              content: Center(child: Text('Upload complete!\nStatus: ${result["status"]}')),
               backgroundColor: Colors.green,
             ),
           );
@@ -94,7 +96,9 @@ class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Center(
-                  child: Text('Upload failed: ${response.statusMessage}')),
+                child: Text(
+                    'Upload failed: ${response.data["message"] ?? response.statusMessage}'),
+              ),
               backgroundColor: Colors.red,
             ),
           );

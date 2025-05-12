@@ -30,6 +30,8 @@ class PatientLoginCubit extends Cubit<PatientLoginState> {
           await SharedPrefsHelper.clearUserId();
           await SharedPrefsHelper.saveUserId(
               patientLoginModel.data.userData.id.toString());
+          final token = patientLoginModel.data.token;
+          await SharedPrefsHelper.saveToken(token);
           emit(PatientLoginSuccess(patientLoginModel: patientLoginModel));
         },
       );
