@@ -77,7 +77,12 @@ abstract class AppRouter {
         builder: (context, state) => const SpecalistRegisterView()),
     GoRoute(
         path: kReportGeneratingView,
-        builder: (context, state) => const ReportGeneratingView()),
+        builder: (context, state) {
+          final String imageId = state.extra.toString();
+          return ReportGeneratingView(
+            imageId: imageId,
+          );
+        },),
     GoRoute(
         path: kConsultationView,
         builder: (context, state) => const ConsultationView()),

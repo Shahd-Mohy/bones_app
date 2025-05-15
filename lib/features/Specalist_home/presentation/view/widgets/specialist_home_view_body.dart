@@ -16,7 +16,8 @@ class SpecialistHomeViewBody extends StatefulWidget {
   const SpecialistHomeViewBody({super.key});
 
   @override
-  State<SpecialistHomeViewBody> createState() => _SpecialistHomeViewBodyState();
+  State<SpecialistHomeViewBody> createState() =>
+      _SpecialistHomeViewBodyState();
 }
 
 class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
@@ -41,8 +42,10 @@ class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
   ];
 
   File? selectedImage;
+  String? uploadedImageId;
   bool ispicking = false;
-    void _pickImage() async {
+
+  void _pickImage() async {
     if (ispicking) return;
     ispicking = true;
 
@@ -59,18 +62,8 @@ class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
         if (userId == null) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Center(
-                  child: Text('User ID not found. Please log in again.')),
-              backgroundColor: Colors.red,
-            ),
-          );
-          return;
-        }
-
-        if (selectedBodyPart == null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Center(child: Text('Please select a body part.')),
+              content:
+                  Center(child: Text('User ID not found. Please log in again.')),
               backgroundColor: Colors.red,
             ),
           );
@@ -80,18 +73,20 @@ class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
         final response = await imageUploadService.uploadImage(
           imageFile: imageFile,
           userId: userId,
-          bodyPart: selectedBodyPart!.toLowerCase(),
+          bodyPart: "", // Always empty
         );
 
         if (response.statusCode == 200) {
           final result = response.data["data"][0]["data"];
-          debugPrint("Model result: $result");
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Center(child: Text('Upload complete!\nStatus: ${result["status"]}')),
-              backgroundColor: Colors.green,
-            ),
-          );
+          final imageId = result["id"];
+          debugPrint("Upload complete! Image ID: $imageId");
+
+          setState(() {
+            uploadedImageId = imageId;
+          });
+
+          GoRouter.of(context)
+              .push(AppRouter.kReportGeneratingView, extra: imageId);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -132,9 +127,7 @@ class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
                   selectedImage: selectedImage,
                   onTap: _pickImage,
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.01,
-                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                 const Spacer(),
                 Row(
                   children: [
@@ -175,7 +168,7 @@ class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
                           }).toList(),
                           onChanged: (value) {
                             setState(() {
-                              selectedBodyPart = value!;
+                              selectedBodyPart = value;
                             });
                           },
                         ),
@@ -211,17 +204,17 @@ class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
                     SizedBox(width: MediaQuery.of(context).size.width * 0.08),
                     CustomMidButton(
                       title: "Give FeedBack",
-                      onPressed: () => GoRouter.of(context)
-                          .push(AppRouter.kConsultationView),
+                      onPressed: () =>
+                          GoRouter.of(context).push(AppRouter.kConsultationView),
                     ),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 CustomMidButton(
                   title: "View Report",
                   width: 348,
                   onPressed: () {
-                    if (selectedImage == null) {
+                    if (uploadedImageId == null) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Center(
@@ -233,18 +226,10 @@ class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
                       return;
                     }
 
-                    if (selectedBodyPart == null) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content:
-                              Center(child: Text('Please select a body part.')),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
-                      return;
-                    }
-
-                    GoRouter.of(context).push(AppRouter.kReportGeneratingView);
+                    GoRouter.of(context).push(
+                      AppRouter.kReportGeneratingView,
+                      extra: uploadedImageId,
+                    );
                   },
                 ),
               ],

@@ -30,7 +30,6 @@ class _PatientHomeViewBodyState extends State<PatientHomeViewBody> {
   String? selectedBodyPart;
   final List<String> bodyParts = [
     'Hand',
-    'Arm',
     'Shoulder',
     'Finger',
     'Elbow',
@@ -38,8 +37,11 @@ class _PatientHomeViewBodyState extends State<PatientHomeViewBody> {
     'Forearm',
     'Wrist',
   ];
+
   File? selectedImage;
+  String? uploadedImageId;
   bool ispicking = false;
+
   void _pickImage() async {
     if (ispicking) return;
     ispicking = true;
@@ -65,31 +67,24 @@ class _PatientHomeViewBodyState extends State<PatientHomeViewBody> {
           return;
         }
 
-        if (selectedBodyPart == null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Center(child: Text('Please select a body part.')),
-              backgroundColor: Colors.red,
-            ),
-          );
-          return;
-        }
-
+        // Always send empty string for body part
         final response = await imageUploadService.uploadImage(
           imageFile: imageFile,
           userId: userId,
-          bodyPart: selectedBodyPart!.toLowerCase(),
+          bodyPart: "", // Always empty
         );
 
         if (response.statusCode == 200) {
           final result = response.data["data"][0]["data"];
-          debugPrint("Model result: $result");
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Center(child: Text('Upload complete!\nStatus: ${result["status"]}')),
-              backgroundColor: Colors.green,
-            ),
-          );
+          final imageId = result["id"];
+          debugPrint("Upload complete! Image ID: $imageId");
+
+          setState(() {
+            uploadedImageId = imageId;
+          });
+
+          GoRouter.of(context)
+              .push(AppRouter.kReportGeneratingView, extra: imageId);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -173,7 +168,7 @@ class _PatientHomeViewBodyState extends State<PatientHomeViewBody> {
                           }).toList(),
                           onChanged: (value) {
                             setState(() {
-                              selectedBodyPart = value!;
+                              selectedBodyPart = value;
                             });
                           },
                         ),
@@ -219,7 +214,7 @@ class _PatientHomeViewBodyState extends State<PatientHomeViewBody> {
                   title: "View Report",
                   width: 348,
                   onPressed: () {
-                    if (selectedImage == null) {
+                    if (uploadedImageId == null) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Center(
@@ -231,18 +226,10 @@ class _PatientHomeViewBodyState extends State<PatientHomeViewBody> {
                       return;
                     }
 
-                    if (selectedBodyPart == null) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content:
-                              Center(child: Text('Please select a body part.')),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
-                      return;
-                    }
-
-                    GoRouter.of(context).push(AppRouter.kReportGeneratingView);
+                    GoRouter.of(context).push(
+                      AppRouter.kReportGeneratingView,
+                      extra: uploadedImageId,
+                    );
                   },
                 ),
               ],

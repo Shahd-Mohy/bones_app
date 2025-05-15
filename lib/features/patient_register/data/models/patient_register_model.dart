@@ -8,40 +8,53 @@ class PatientRegisterModel {
     required this.message,
     required this.data,
   });
-
-  factory PatientRegisterModel.fromJson(Map<String, dynamic> json) {
+  factory PatientRegisterModel.fromjson(Map<String, dynamic> json) {
     return PatientRegisterModel(
-      success: json['success'] as bool,
-      message: json['message'] as String,
-      data: Data.fromJson(json['data']),
-    );
+        success: json['success'],
+        message: json['message'],
+        data: Data.fromJson(json['data']));
   }
 }
 
 class Data {
-  int id;
-  String name;
-  String email;
+  String token;
+  DateTime expire;
   String userId;
-  int freeLimit;
-  String phoneNumber;
+  UserData userData;
 
   Data({
-    required this.id,
-    required this.name,
-    required this.email,
+    required this.token,
+    required this.expire,
     required this.userId,
-    required this.freeLimit,
-    required this.phoneNumber,
+    required this.userData,
   });
-
   factory Data.fromJson(Map<String, dynamic> json) {
     return Data(
-      id: json['id'],
-      name: json['name'],
-      email: json['email'],
+      token: json['token'],
+      expire: DateTime.parse(json['expire']),
       userId: json['userId'],
-      freeLimit: json['freeLimit'],
+      userData: UserData.fromJson(json['userData']),
+    );
+  }
+}
+
+class UserData {
+  int id;
+  String userName;
+  String email;
+  String phoneNumber;
+
+  UserData({
+    required this.id,
+    required this.userName,
+    required this.email,
+    required this.phoneNumber,
+  });
+  factory UserData.fromJson(Map<String, dynamic> json) {
+    return UserData(
+      id: json['id'],
+      userName: json['userName'],
+      email: json['email'],
       phoneNumber: json['phoneNumber'],
     );
   }

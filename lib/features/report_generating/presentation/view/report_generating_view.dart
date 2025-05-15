@@ -1,30 +1,23 @@
-import 'package:bones_app/constants.dart';
-import 'package:bones_app/core/utils/styles.dart';
+import 'package:bones_app/core/cubits/cubit/image_report_cubit.dart';
+import 'package:bones_app/core/networking/get_report_service.dart';
 import 'package:bones_app/features/report_generating/presentation/view/widgets/report_generating_view_body.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bones_app/core/networking/dio_client.dart';
 
 class ReportGeneratingView extends StatelessWidget {
-  const ReportGeneratingView({super.key});
+  final String imageId;
+
+  const ReportGeneratingView({super.key, required this.imageId});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: kPrimaryColor,
-          centerTitle: true,
-          title: const Text(
-            "Report Generating",
-            style: Styles.textStyle20,
-          ),
-          leading: IconButton(
-              icon: const Icon(
-                Icons.arrow_back_rounded,
-                size: 30,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              }),
-        ),
-        body: const ReportGeneratingViewBody());
+    return BlocProvider(
+      create: (_) => ImageReportCubit(ImageReportService(DioClient.createDio()))
+        ..fetchReport(imageId),
+      child: const Scaffold(
+        body: ReportGeneratingViewBody(),
+      ),
+    );
   }
 }

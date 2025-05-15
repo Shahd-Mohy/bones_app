@@ -32,4 +32,19 @@ class SharedPrefsHelper {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('auth_token');
   }
+
+  static Future<void> saveImageId(String imageId) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('image_id', imageId);
+  }
+
+  static Future<String?> getImageId() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('image_id');
+  }
+
+  static Future<void> clearImageId() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('image_id');
+  }
 }

@@ -41,7 +41,7 @@ class SpecialistRegisterRepoImp implements SpecialistRegisterRepo {
           'Content-Type': 'multipart/form-data',
         }),
       );
-      return right(SpecialistRegisterModel.fromJson(response.data));
+      return right(SpecialistRegisterModel.fromjson(response.data));
     } catch (e) {
       if (e is DioError) {
         return left(ServerFailure.fromDioError(e));

@@ -34,7 +34,7 @@ class PatientRegisterRepoImp implements PatientRegisterRepo {
         }),
       );
 
-      return right(PatientRegisterModel.fromJson(response.data));
+      return right(PatientRegisterModel.fromjson(response.data));
     } catch (e) {
       if (e is DioError) {
         return left(ServerFailure.fromDioError(e));
