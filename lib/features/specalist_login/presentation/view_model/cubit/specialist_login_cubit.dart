@@ -22,14 +22,22 @@ class SpecialistLoginCubit extends Cubit<SpecialistLoginState> {
       password: password,
       role: 'specialist',
     );
-    result.fold((Failure) => emit(SpecialistLoginFailure(Failure.errMessage)),
-        (SpecialistLoginModel) async {
-      await SharedPrefsHelper.clearUserId();
+    result.fold((failure) => emit(SpecialistLoginFailure(failure.errMessage)),
+        (specialistLoginModel) async {
+      await SharedPrefsHelper.clearAll();
       await SharedPrefsHelper.saveUserId(
-          SpecialistLoginModel.data.userData.id.toString());
-      final token = SpecialistLoginModel.data.token;
+          specialistLoginModel.data.userData.id.toString());
+      final token = specialistLoginModel.data.token;
       await SharedPrefsHelper.saveToken(token);
-      emit(SpecialistLoginSuccess(specialistLoginModel: SpecialistLoginModel));
+      await SharedPrefsHelper.saveUserInfo(
+        name: specialistLoginModel.data.userData.userName,
+        email: specialistLoginModel.data.userData.email,
+        phone: specialistLoginModel.data.userData.phoneNumber ?? '',
+      );
+      await SharedPrefsHelper.saveStringUserId(
+          specialistLoginModel.data.userId);
+
+      emit(SpecialistLoginSuccess(specialistLoginModel: specialistLoginModel));
     });
   }
 }

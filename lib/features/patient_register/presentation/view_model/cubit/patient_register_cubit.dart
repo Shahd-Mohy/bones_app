@@ -32,10 +32,17 @@ class PatientRegisterCubit extends Cubit<PatientRegisterState> {
 
       result.fold((failure) => emit(PatientRegisterFailure(failure.errMessage)),
           (patientRegisterModel) async {
+        await SharedPrefsHelper.clearAll();
         await SharedPrefsHelper.saveUserId(
             patientRegisterModel.data.userData.id.toString());
-             final token = patientRegisterModel.data.token;
-      await SharedPrefsHelper.saveToken(token);
+        final token = patientRegisterModel.data.token;
+        await SharedPrefsHelper.saveToken(token);
+        await SharedPrefsHelper.saveUserInfo(
+          name: patientRegisterModel.data.userData.userName,
+          email: patientRegisterModel.data.userData.email,
+          phone: patientRegisterModel.data.userData.phoneNumber,
+        );
+
         emit(
             PatientRegisterSuccess(patientRegisterModel: patientRegisterModel));
       });

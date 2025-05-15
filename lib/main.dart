@@ -10,10 +10,10 @@ import 'package:google_fonts/google_fonts.dart';
 void main() {
   runApp(MultiBlocProvider(
     providers: [
-    BlocProvider(
-      create: (_) => ImageReportCubit(ImageReportService(Dio())),
-    ),
-  ],
+      BlocProvider(
+        create: (_) => ImageReportCubit(ImageReportService(Dio())),
+      ),
+    ],
     child: const BonesApp(),
   ));
 }

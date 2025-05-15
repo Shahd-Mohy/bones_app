@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:bones_app/constants.dart';
 import 'package:bones_app/core/networking/upload_image_service.dart';
 import 'package:bones_app/core/utils/app_router.dart';
@@ -16,23 +15,18 @@ class SpecialistHomeViewBody extends StatefulWidget {
   const SpecialistHomeViewBody({super.key});
 
   @override
-  State<SpecialistHomeViewBody> createState() =>
-      _SpecialistHomeViewBodyState();
+  State<SpecialistHomeViewBody> createState() => _SpecialistHomeViewBodyState();
 }
 
 class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
   late final ImageUploadService imageUploadService;
-
-  @override
-  void initState() {
-    super.initState();
-    imageUploadService = ImageUploadService(dio: Dio());
-  }
-
+  File? selectedImage;
+  String? uploadedImageId;
   String? selectedBodyPart;
+  bool ispicking = false;
+
   final List<String> bodyParts = [
     'Hand',
-    'Arm',
     'Shoulder',
     'Finger',
     'Elbow',
@@ -41,9 +35,11 @@ class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
     'Wrist',
   ];
 
-  File? selectedImage;
-  String? uploadedImageId;
-  bool ispicking = false;
+  @override
+  void initState() {
+    super.initState();
+    imageUploadService = ImageUploadService(dio: Dio());
+  }
 
   void _pickImage() async {
     if (ispicking) return;
@@ -60,20 +56,15 @@ class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
 
         final userId = await SharedPrefsHelper.getUserId();
         if (userId == null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content:
-                  Center(child: Text('User ID not found. Please log in again.')),
-              backgroundColor: Colors.red,
-            ),
-          );
+          _showError('User ID not found. Please log in again.');
           return;
         }
 
+        // Always send empty string for body part, like PatientHomeViewBody
         final response = await imageUploadService.uploadImage(
           imageFile: imageFile,
           userId: userId,
-          bodyPart: "", // Always empty
+          bodyPart: "", // Keep empty as per your logic
         );
 
         if (response.statusCode == 200) {
@@ -88,28 +79,24 @@ class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
           GoRouter.of(context)
               .push(AppRouter.kReportGeneratingView, extra: imageId);
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Center(
-                child: Text(
-                    'Upload failed: ${response.data["message"] ?? response.statusMessage}'),
-              ),
-              backgroundColor: Colors.red,
-            ),
-          );
+          _showError(response.data["message"] ?? response.statusMessage);
         }
       }
     } catch (e) {
       debugPrint('File picker or upload error: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Center(child: Text('Something went wrong while uploading.')),
-          backgroundColor: Colors.red,
-        ),
-      );
+      _showError('Something went wrong while uploading.');
     } finally {
       ispicking = false;
     }
+  }
+
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Center(child: Text(message)),
+        backgroundColor: Colors.red,
+      ),
+    );
   }
 
   @override
@@ -180,8 +167,9 @@ class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
                 Row(
                   children: [
                     CustomMidButton(
-                      title: "Retrive Image",
-                      onPressed: () {},
+                      title: "Retrive Images",
+                      onPressed: () =>
+                          GoRouter.of(context).push(AppRouter.kProfileView),
                     ),
                     SizedBox(width: MediaQuery.of(context).size.width * 0.08),
                     const Icon(
@@ -203,9 +191,9 @@ class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
                     ),
                     SizedBox(width: MediaQuery.of(context).size.width * 0.08),
                     CustomMidButton(
-                      title: "Give FeedBack",
-                      onPressed: () =>
-                          GoRouter.of(context).push(AppRouter.kConsultationView),
+                      title: "Give Feedback",
+                      onPressed: () => GoRouter.of(context)
+                          .push(AppRouter.kConsultationView),
                     ),
                   ],
                 ),
@@ -215,14 +203,7 @@ class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
                   width: 348,
                   onPressed: () {
                     if (uploadedImageId == null) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Center(
-                              child:
-                                  Text('You need to upload an image first.')),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
+                      _showError('You need to upload an image first.');
                       return;
                     }
 

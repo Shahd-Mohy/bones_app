@@ -35,10 +35,18 @@ class SpecialistRegisterCubit extends Cubit<SpecialistRegisterState> {
       result.fold(
           (Failure) => emit(SpecialistRegisterFailure(Failure.errMessage)),
           (SpecialistRegisterModel) async {
+        await SharedPrefsHelper.clearAll();
         await SharedPrefsHelper.saveUserId(
             SpecialistRegisterModel.data.userData.id.toString());
         final token = SpecialistRegisterModel.data.token;
         await SharedPrefsHelper.saveToken(token);
+        await SharedPrefsHelper.saveUserInfo(
+          name: SpecialistRegisterModel.data.userData.userName,
+          email: SpecialistRegisterModel.data.userData.email,
+          phone: SpecialistRegisterModel.data.userData.phoneNumber,
+        );
+        await SharedPrefsHelper.saveStringUserId(
+            SpecialistRegisterModel.data.userId);
 
         emit(SpecialistRegisterSuccess(
             specialistRegisterModel: SpecialistRegisterModel));
