@@ -52,11 +52,22 @@ abstract class AppRouter {
         path: kForgetPasswordView,
         builder: (context, state) => const ForgetPasswordView()),
     GoRoute(
-        path: kCodeVerifyView,
-        builder: (context, state) => const CodeVerificationView()),
+      path: kCodeVerifyView,
+      builder: (context, state) {
+        final email = state.extra.toString();
+        return CodeVerificationView(email: email);
+      },
+    ),
     GoRoute(
-        path: kResetPasswordView,
-        builder: (context, state) => const ResetPasswordView()),
+      path: kResetPasswordView,
+      builder: (context, state) {
+        final data = state.extra as Map<String, String>;
+        return ResetPasswordView(
+          email: data['email']!,
+          code: data['code']!,
+        );
+      },
+    ),
     GoRoute(
       path: kPatientRegisterView,
       builder: (context, state) => const PatientRegisterView(),
@@ -76,13 +87,14 @@ abstract class AppRouter {
         path: kSpecalistRegisterView,
         builder: (context, state) => const SpecalistRegisterView()),
     GoRoute(
-        path: kReportGeneratingView,
-        builder: (context, state) {
-          final String imageId = state.extra.toString();
-          return ReportGeneratingView(
-            imageId: imageId,
-          );
-        },),
+      path: kReportGeneratingView,
+      builder: (context, state) {
+        final String imageId = state.extra.toString();
+        return ReportGeneratingView(
+          imageId: imageId,
+        );
+      },
+    ),
     GoRoute(
         path: kConsultationView,
         builder: (context, state) => const ConsultationView()),

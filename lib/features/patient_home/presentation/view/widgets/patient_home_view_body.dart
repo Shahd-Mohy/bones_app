@@ -67,11 +67,10 @@ class _PatientHomeViewBodyState extends State<PatientHomeViewBody> {
           return;
         }
 
-        // Always send empty string for body part
         final response = await imageUploadService.uploadImage(
           imageFile: imageFile,
           userId: userId,
-          bodyPart: "", // Always empty
+          bodyPart: "", 
         );
 
         if (response.statusCode == 200) {
@@ -181,7 +180,7 @@ class _PatientHomeViewBodyState extends State<PatientHomeViewBody> {
                   children: [
                     CustomMidButton(
                       title: "Retrive Image",
-                      onPressed: () {},
+                      onPressed: ()=> GoRouter.of(context).push(AppRouter.kProfileView),
                     ),
                     SizedBox(width: MediaQuery.of(context).size.width * 0.08),
                     const Icon(

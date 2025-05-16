@@ -60,7 +60,7 @@ class _SpecalistLoginViewBodyState extends State<SpecalistLoginViewBody> {
               backgroundColor: Colors.green,
             ),
           );
-          GoRouter.of(context).pushReplacement(AppRouter.kSpecialistHomeView);
+          GoRouter.of(context).go(AppRouter.kSpecialistHomeView);
         }
       },
       builder: (context, state) {

@@ -58,7 +58,7 @@ class _PatientLoginViewBodyState extends State<PatientLoginViewBody> {
               backgroundColor: Colors.green,
             ),
           );
-          GoRouter.of(context).push(AppRouter.kPatientHomeView);
+          GoRouter.of(context).go(AppRouter.kPatientHomeView);
         }
       },
       builder: (context, state) {

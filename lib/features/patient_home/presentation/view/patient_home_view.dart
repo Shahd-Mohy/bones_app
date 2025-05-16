@@ -19,14 +19,6 @@ class PatientHomeView extends StatelessWidget {
             "Patient Home",
             style: Styles.textStyle20,
           ),
-          leading: IconButton(
-              icon: const Icon(
-                Icons.arrow_back_rounded,
-                size: 30,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              }),
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 20.0),

@@ -1,10 +1,21 @@
+import 'package:bones_app/core/networking/api_services.dart';
+import 'package:bones_app/core/networking/dio_client.dart';
+import 'package:bones_app/core/utils/app_router.dart';
 import 'package:bones_app/core/utils/styles.dart';
 import 'package:bones_app/core/widgets/custom_large_button.dart';
 import 'package:bones_app/core/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ResetPasswordViewBody extends StatefulWidget {
-  const ResetPasswordViewBody({super.key});
+  final String email;
+  final String code;
+
+  const ResetPasswordViewBody({
+    super.key,
+    required this.email,
+    required this.code,
+  });
 
   @override
   State<ResetPasswordViewBody> createState() => _ResetPasswordViewBodyState();
@@ -12,13 +23,60 @@ class ResetPasswordViewBody extends StatefulWidget {
 
 class _ResetPasswordViewBodyState extends State<ResetPasswordViewBody> {
   final _formKey = GlobalKey<FormState>();
-
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
+  bool _isLoading = false;
+
+  Future<void> _resetPassword() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final apiService = ApiService(DioClient.createDio());
+      final response = await apiService.post(
+        endPoint: 'api/Account/ResetPassword',
+        data: {
+          'email': widget.email,
+          'code': widget.code,
+          'newPassword': _passwordController.text.trim(),
+        },
+      );
+
+      if (response['success'] == true) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text("Password reset successful"),
+              backgroundColor: Colors.green),
+        );
+        GoRouter.of(context).go(AppRouter.kGetStartedView);
+      } else {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text(response['message'] ?? "Reset failed"),
+              backgroundColor: Colors.red),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text("An error occurred"), backgroundColor: Colors.red),
+      );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
   @override
   void dispose() {
@@ -45,7 +103,7 @@ class _ResetPasswordViewBodyState extends State<ResetPasswordViewBody> {
               ),
               const SizedBox(height: 10),
 
-              /// Password field
+              // Password Field
               CustomTextFormField(
                 controller: _passwordController,
                 label: "Create new password",
@@ -74,7 +132,7 @@ class _ResetPasswordViewBodyState extends State<ResetPasswordViewBody> {
               ),
               const SizedBox(height: 10),
 
-              /// Confirm Password field
+              // Confirm Password Field
               CustomTextFormField(
                 controller: _confirmPasswordController,
                 label: "Confirm new password",
@@ -103,18 +161,13 @@ class _ResetPasswordViewBodyState extends State<ResetPasswordViewBody> {
               ),
               const SizedBox(height: 15),
 
-              /// Button
               CustomLargeButton(
-                title: 'Login',
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    // Proceed with reset
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                          content: Text('Password reset successful')),
-                    );
-                  }
-                },
+                title: _isLoading ? 'Loading...' : 'Reset Password',
+                onPressed: _isLoading
+                    ? () {}
+                    : () {
+                        _resetPassword();
+                      },
               ),
             ],
           ),

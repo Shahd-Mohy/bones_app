@@ -63,7 +63,7 @@ class _PatientRegisterViewBodyState extends State<PatientRegisterViewBody> {
               backgroundColor: Colors.green,
             ),
           );
-          GoRouter.of(context).push(AppRouter.kPatientHomeView);
+          GoRouter.of(context).go(AppRouter.kPatientHomeView);
         } else if (state is PatientRegisterFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(

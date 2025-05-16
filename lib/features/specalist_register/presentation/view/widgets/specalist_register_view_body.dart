@@ -50,7 +50,7 @@ class _SpecalistRegisterViewBodyState extends State<SpecalistRegisterViewBody> {
               backgroundColor: Colors.green,
             ),
           );
-          GoRouter.of(context).push(AppRouter.kSpecialistHomeView);
+          GoRouter.of(context).go(AppRouter.kSpecialistHomeView);
         }
       },
       builder: (context, state) {

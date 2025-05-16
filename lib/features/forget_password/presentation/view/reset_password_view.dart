@@ -4,11 +4,13 @@ import 'package:bones_app/features/forget_password/presentation/view/widgets/res
 import 'package:flutter/material.dart';
 
 class ResetPasswordView extends StatelessWidget {
-  const ResetPasswordView({super.key});
+  final String email;
+  final String code;
+  const ResetPasswordView({super.key, required this.email, required this.code});
 
   @override
   Widget build(BuildContext context) {
-     return Scaffold(
+    return Scaffold(
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
         centerTitle: true,
@@ -25,7 +27,7 @@ class ResetPasswordView extends StatelessWidget {
               Navigator.pop(context);
             }),
       ),
-      body: const ResetPasswordViewBody(),
+      body: ResetPasswordViewBody(email: email, code: code),
     );
   }
 }
