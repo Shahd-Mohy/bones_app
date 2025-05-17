@@ -8,17 +8,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
-class SpecialistListItem extends StatelessWidget {
+class PatientCard extends StatelessWidget {
+  const PatientCard(
+      {super.key,
+      required this.name,
+      required this.email,
+      required this.userId});
   final String name;
   final String email;
   final String userId;
-
-  const SpecialistListItem({
-    super.key,
-    required this.name,
-    required this.email,
-    required this.userId,
-  });
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +44,7 @@ class SpecialistListItem extends StatelessWidget {
                     shape: BoxShape.rectangle,
                   ),
                   child: Lottie.asset(
-                    "assets/animations/dostorAvatar.json",
+                    "assets/animations/patientAvatar.json",
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -81,14 +79,15 @@ class SpecialistListItem extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           CustomMessageButton(
-              title: "Message",
+              title: "Reply",
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (_) => BlocProvider(
-                      create: (context) => ChatCubit(ChatService(dio: DioClient.createDio()),)
-                        ..fetchChatMessages(userId),
+                      create: (context) => ChatCubit(
+                        ChatService(dio: DioClient.createDio()),
+                      )..fetchChatMessages(userId),
                       child: ChatView(
                         receiverId: userId,
                         doctorName: name,

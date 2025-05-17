@@ -1,3 +1,5 @@
+import 'package:bones_app/core/networking/chat_service.dart';
+import 'package:bones_app/features/Patient%20consultations/presentation/view/patient_consultation_view.dart';
 import 'package:bones_app/features/chat/presentation/view/chat_view.dart';
 import 'package:bones_app/features/forget_password/presentation/view/code_verification_view.dart';
 import 'package:bones_app/features/forget_password/presentation/view/reset_password_view.dart';
@@ -14,6 +16,7 @@ import 'package:bones_app/features/report_generating/presentation/view/report_ge
 import 'package:bones_app/features/specalist_login/presentation/view/specalist_login_view.dart';
 import 'package:bones_app/features/specalist_register/presentation/view/specalist_register_view.dart';
 import 'package:bones_app/features/welcome/presentation/view/welcome_view.dart';
+import 'package:dio/dio.dart';
 import 'package:go_router/go_router.dart';
 
 abstract class AppRouter {
@@ -33,6 +36,7 @@ abstract class AppRouter {
   static const kConsultationView = '/consultation';
   static const kChatView = '/chat';
   static const kProfileView = '/profile';
+  static const kPreviousConsultationView = '/previousConsultation';
 
   static final router = GoRouter(routes: [
     GoRoute(path: "/", builder: (context, state) => const WelcomeView()),
@@ -98,8 +102,24 @@ abstract class AppRouter {
     GoRoute(
         path: kConsultationView,
         builder: (context, state) => const ConsultationView()),
-    GoRoute(path: kChatView, builder: (context, state) => const ChatView()),
+    GoRoute(
+      path: kChatView,
+      builder: (context, state) {
+        final data = state.extra as Map<String, dynamic>;
+        return ChatView(
+          receiverId: data['userId'],
+          doctorName: data['name'],
+        );
+      },
+    ),
     GoRoute(
         path: kProfileView, builder: (context, state) => const ProfileView()),
+    GoRoute(
+  path: kPreviousConsultationView,
+  builder: (context, state) => PatientConsultationView(
+    chatService: ChatService(dio: Dio()),
+  ),
+),
+
   ]);
 }

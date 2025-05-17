@@ -2,8 +2,8 @@ import 'package:bones_app/constants.dart';
 import 'package:flutter/material.dart';
 
 class ChatBubbleSender extends StatelessWidget {
-  const ChatBubbleSender({super.key});
-
+  const ChatBubbleSender({super.key, required this.text});
+final String text;
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -19,9 +19,9 @@ class ChatBubbleSender extends StatelessWidget {
             bottomLeft: Radius.circular(10),
           ),
         ),
-        child: const Text(
-          "Hello, how are you?Patienttttttttt",
-          style: TextStyle(
+        child:  Text(
+          text,
+          style:const TextStyle(
             color: Colors.black,
             fontSize: 16
           ),

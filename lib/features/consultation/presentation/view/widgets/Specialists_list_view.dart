@@ -23,6 +23,7 @@ class SpecialistsListView extends StatelessWidget {
               return SpecialistListItem(
                 name: specialist.name,
                 email: specialist.email,
+                userId: specialist.userId,
               );
             },
           );

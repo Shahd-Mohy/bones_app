@@ -12,7 +12,7 @@ import 'package:go_router/go_router.dart';
 class CodeVerificationBody extends StatefulWidget {
   final String email;
   const CodeVerificationBody({super.key, required this.email});
-
+ 
   @override
   State<CodeVerificationBody> createState() => _CodeVerificationBodyState();
 }

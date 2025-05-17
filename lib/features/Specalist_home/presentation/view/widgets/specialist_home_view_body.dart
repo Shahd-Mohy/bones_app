@@ -191,9 +191,9 @@ class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
                     ),
                     SizedBox(width: MediaQuery.of(context).size.width * 0.08),
                     CustomMidButton(
-                      title: "Give Feedback",
+                      title: "Previous Consultations",
                       onPressed: () => GoRouter.of(context)
-                          .push(AppRouter.kConsultationView),
+                          .push(AppRouter.kPreviousConsultationView),
                     ),
                   ],
                 ),
