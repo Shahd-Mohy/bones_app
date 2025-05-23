@@ -40,61 +40,84 @@ class _PatientHomeViewBodyState extends State<PatientHomeViewBody> {
 
   File? selectedImage;
   String? uploadedImageId;
-  bool ispicking = false;
+  bool isUploading = false;
+  bool hasUploadedNotViewed = false;
 
-  void _pickImage() async {
-    if (ispicking) return;
-    ispicking = true;
+  Future<void> _pickImage() async {
+    if (isUploading) return;
 
     try {
       final result = await FilePicker.platform.pickFiles();
-      if (result != null && result.files.single.path != null) {
-        final imageFile = File(result.files.single.path!);
+
+      // 👇 User cancelled picking
+      if (result == null || result.files.single.path == null) {
+        return;
+      }
+
+      final imageFile = File(result.files.single.path!);
+
+      // 👇 Only after valid image, start loading
+      setState(() {
+        selectedImage = imageFile;
+        isUploading = true;
+      });
+
+      final userId = await SharedPrefsHelper.getUserId();
+      if (userId == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Center(
+              child: Text('User ID not found. Please log in again.'),
+            ),
+            backgroundColor: Colors.red,
+          ),
+        );
+        setState(() {
+          isUploading = false;
+        });
+        return;
+      }
+
+      final response = await imageUploadService.uploadImage(
+        imageFile: imageFile,
+        userId: userId,
+        bodyPart: selectedBodyPart ?? "",
+      );
+
+      if (response.statusCode == 200) {
+        final result = response.data["data"][0]["data"];
+        final imageId = result["id"];
+        debugPrint("Upload complete! Image ID: $imageId");
 
         setState(() {
-          selectedImage = imageFile;
+          uploadedImageId = imageId;
+          hasUploadedNotViewed = true;
+          isUploading = false;
         });
 
-        final userId = await SharedPrefsHelper.getUserId();
-        if (userId == null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Center(
-                  child: Text('User ID not found. Please log in again.')),
-              backgroundColor: Colors.red,
-            ),
-          );
-          return;
-        }
-
-        final response = await imageUploadService.uploadImage(
-          imageFile: imageFile,
-          userId: userId,
-          bodyPart: "", 
+        await GoRouter.of(context).push(
+          AppRouter.kReportGeneratingView,
+          extra: imageId,
         );
 
-        if (response.statusCode == 200) {
-          final result = response.data["data"][0]["data"];
-          final imageId = result["id"];
-          debugPrint("Upload complete! Image ID: $imageId");
-
-          setState(() {
-            uploadedImageId = imageId;
-          });
-
-          GoRouter.of(context)
-              .push(AppRouter.kReportGeneratingView, extra: imageId);
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Center(
-                child: Text(
-                    'Upload failed: ${response.data["message"] ?? response.statusMessage}'),
+        // 👇 Reset view state after coming back
+        setState(() {
+          hasUploadedNotViewed = false;
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Center(
+              child: Text(
+                'Upload failed: ${response.data["message"] ?? response.statusMessage}',
               ),
-              backgroundColor: Colors.red,
             ),
-          );
-        }
+            backgroundColor: Colors.red,
+          ),
+        );
+        setState(() {
+          isUploading = false;
+        });
       }
     } catch (e) {
       debugPrint('File picker or upload error: $e');
@@ -104,8 +127,9 @@ class _PatientHomeViewBodyState extends State<PatientHomeViewBody> {
           backgroundColor: Colors.red,
         ),
       );
-    } finally {
-      ispicking = false;
+      setState(() {
+        isUploading = false;
+      });
     }
   }
 
@@ -122,24 +146,19 @@ class _PatientHomeViewBodyState extends State<PatientHomeViewBody> {
               children: [
                 UploadImageBox(
                   selectedImage: selectedImage,
-                  onTap: _pickImage,
+                  onTap: isUploading ? () {} : _pickImage,
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.01,
-                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                 const Spacer(),
                 Row(
                   children: [
                     const Spacer(),
-                    const Icon(
-                      Clarity.camera_solid,
-                      size: 30,
-                      color: kSecondaryColor,
-                    ),
+                    const Icon(Clarity.camera_solid,
+                        size: 30, color: kSecondaryColor),
                     SizedBox(width: MediaQuery.of(context).size.width * 0.08),
                     CustomMidButton(
                       title: "Upload Image",
-                      onPressed: _pickImage,
+                      onPressed: isUploading ? () {} : () => _pickImage(),
                     ),
                   ],
                 ),
@@ -180,7 +199,8 @@ class _PatientHomeViewBodyState extends State<PatientHomeViewBody> {
                   children: [
                     CustomMidButton(
                       title: "Retrive Image",
-                      onPressed: ()=> GoRouter.of(context).push(AppRouter.kProfileView),
+                      onPressed: () =>
+                          GoRouter.of(context).push(AppRouter.kProfileView),
                     ),
                     SizedBox(width: MediaQuery.of(context).size.width * 0.08),
                     const Icon(
@@ -210,26 +230,20 @@ class _PatientHomeViewBodyState extends State<PatientHomeViewBody> {
                 ),
                 const Spacer(),
                 CustomMidButton(
-                  title: "View Report",
+                  color: isUploading ? Colors.grey : kSecondaryColor,
+                  title: isUploading ? "Loading..." : "View Report",
                   width: 348,
-                  onPressed: () {
-                    if (uploadedImageId == null) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Center(
-                              child:
-                                  Text('You need to upload an image first.')),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
-                      return;
-                    }
-
-                    GoRouter.of(context).push(
-                      AppRouter.kReportGeneratingView,
-                      extra: uploadedImageId,
-                    );
-                  },
+                  onPressed: isUploading || uploadedImageId == null
+                      ? () {}
+                      : () async {
+                          await GoRouter.of(context).push(
+                            AppRouter.kReportGeneratingView,
+                            extra: uploadedImageId,
+                          );
+                          setState(() {
+                            hasUploadedNotViewed = false;
+                          });
+                        },
                 ),
               ],
             ),

@@ -23,7 +23,8 @@ class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
   File? selectedImage;
   String? uploadedImageId;
   String? selectedBodyPart;
-  bool ispicking = false;
+  bool isUploading = false;
+  bool hasUploadedNotViewed = false;
 
   final List<String> bodyParts = [
     'Hand',
@@ -41,52 +42,66 @@ class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
     imageUploadService = ImageUploadService(dio: Dio());
   }
 
-  void _pickImage() async {
-    if (ispicking) return;
-    ispicking = true;
+  Future<void> _pickImage() async {
+    if (isUploading) return;
 
     try {
       final result = await FilePicker.platform.pickFiles();
-      if (result != null && result.files.single.path != null) {
-        final imageFile = File(result.files.single.path!);
+      if (result == null || result.files.single.path == null) return;
+
+      final imageFile = File(result.files.single.path!);
+
+      setState(() {
+        selectedImage = imageFile;
+        isUploading = true;
+      });
+
+      final userId = await SharedPrefsHelper.getUserId();
+      if (userId == null) {
+        _showError('User ID not found. Please log in again.');
+        setState(() {
+          isUploading = false;
+        });
+        return;
+      }
+
+      final response = await imageUploadService.uploadImage(
+        imageFile: imageFile,
+        userId: userId,
+        bodyPart: selectedBodyPart ?? "",
+      );
+
+      if (response.statusCode == 200) {
+        final result = response.data["data"][0]["data"];
+        final imageId = result["id"];
+        debugPrint("Upload complete! Image ID: $imageId");
 
         setState(() {
-          selectedImage = imageFile;
+          uploadedImageId = imageId;
+          hasUploadedNotViewed = true;
+          isUploading = false;
         });
 
-        final userId = await SharedPrefsHelper.getUserId();
-        if (userId == null) {
-          _showError('User ID not found. Please log in again.');
-          return;
-        }
-
-        // Always send empty string for body part, like PatientHomeViewBody
-        final response = await imageUploadService.uploadImage(
-          imageFile: imageFile,
-          userId: userId,
-          bodyPart: "", // Keep empty as per your logic
+        await GoRouter.of(context).push(
+          AppRouter.kReportGeneratingView,
+          extra: imageId,
         );
 
-        if (response.statusCode == 200) {
-          final result = response.data["data"][0]["data"];
-          final imageId = result["id"];
-          debugPrint("Upload complete! Image ID: $imageId");
-
-          setState(() {
-            uploadedImageId = imageId;
-          });
-
-          GoRouter.of(context)
-              .push(AppRouter.kReportGeneratingView, extra: imageId);
-        } else {
-          _showError(response.data["message"] ?? response.statusMessage);
-        }
+        setState(() {
+          hasUploadedNotViewed = false;
+        });
+      } else {
+        _showError(response.data["message"] ?? response.statusMessage);
+        setState(() {
+          isUploading = false;
+        });
       }
     } catch (e) {
       debugPrint('File picker or upload error: $e');
       _showError('Something went wrong while uploading.');
-    } finally {
-      ispicking = false;
+      setState(() {
+        isUploading = false;
+      });
     }
   }
 
@@ -112,7 +127,7 @@ class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
               children: [
                 UploadImageBox(
                   selectedImage: selectedImage,
-                  onTap: _pickImage,
+                  onTap: isUploading ? () {} : _pickImage,
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                 const Spacer(),
@@ -127,7 +142,7 @@ class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
                     SizedBox(width: MediaQuery.of(context).size.width * 0.08),
                     CustomMidButton(
                       title: "Upload Image",
-                      onPressed: _pickImage,
+                      onPressed: isUploading ? () {} : _pickImage,
                     ),
                   ],
                 ),
@@ -199,19 +214,20 @@ class _SpecialistHomeViewBodyState extends State<SpecialistHomeViewBody> {
                 ),
                 const Spacer(),
                 CustomMidButton(
-                  title: "View Report",
+                  color: isUploading ? Colors.grey : kSecondaryColor,
+                  title: isUploading ? "Loading..." : "View Report",
                   width: 348,
-                  onPressed: () {
-                    if (uploadedImageId == null) {
-                      _showError('You need to upload an image first.');
-                      return;
-                    }
-
-                    GoRouter.of(context).push(
-                      AppRouter.kReportGeneratingView,
-                      extra: uploadedImageId,
-                    );
-                  },
+                  onPressed: isUploading || uploadedImageId == null
+                      ? () {}
+                      : () async {
+                          await GoRouter.of(context).push(
+                            AppRouter.kReportGeneratingView,
+                            extra: uploadedImageId,
+                          );
+                          setState(() {
+                            hasUploadedNotViewed = false;
+                          });
+                        },
                 ),
               ],
             ),
