@@ -12,7 +12,7 @@ final String text;
         padding: const EdgeInsets.only(left: 16, top: 16, bottom: 16, right: 16),
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: const BoxDecoration(
-          color: kTextFieldColor,
+          color: kSecondaryColor,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(10),
             topRight: Radius.circular(10),

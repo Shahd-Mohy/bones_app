@@ -14,16 +14,16 @@ class ChatBubbleReciever extends StatelessWidget {
             const EdgeInsets.only(left: 16, top: 16, bottom: 16, right: 16),
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: const BoxDecoration(
-          color: kSecondaryColor,
+          color: kTextFieldColor,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(10),
             topRight: Radius.circular(10),
             bottomRight: Radius.circular(10),
           ),
         ),
-        child:  Text(
+        child: Text(
           text,
-          style:const TextStyle(
+          style: const TextStyle(
             color: Colors.black,
             fontSize: 16,
           ),

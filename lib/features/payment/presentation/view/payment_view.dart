@@ -1,5 +1,4 @@
-import 'package:bones_app/constants.dart';
-import 'package:bones_app/core/utils/assets.dart';
+import 'package:bones_app/core/utils/styles.dart';
 import 'package:bones_app/features/payment/presentation/view/widgets/payment_view_body.dart';
 import 'package:flutter/material.dart';
 
@@ -10,21 +9,22 @@ class PaymentView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_rounded,
+            size: 30,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 10.0),
-          child: Container(
-            decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: kTextFieldColor,
-                image: DecorationImage(
-                    image: AssetImage(AssetsData.userImage),
-                    fit: BoxFit.contain)),
-            height: 100,
-            width: 100,
-          ),
+        title: const Text(
+          "💳 Complete Your Payment",
+          style: Styles.notesTextStyle,
         ),
+        centerTitle: true,
       ),
       body: const PaymentViewBody(),
     );
