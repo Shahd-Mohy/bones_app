@@ -15,7 +15,7 @@ class SpecialistsListView extends StatelessWidget {
         } else if (state is SpecialistSuccess) {
           return ListView.builder(
             padding: const EdgeInsets.symmetric(vertical: 10),
-            physics: const NeverScrollableScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             shrinkWrap: true,
             itemCount: state.specialists.length,
             itemBuilder: (context, index) {

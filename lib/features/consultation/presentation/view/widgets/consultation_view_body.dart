@@ -1,7 +1,9 @@
 import 'package:bones_app/core/utils/styles.dart';
 import 'package:bones_app/features/consultation/presentation/view/widgets/Specialists_list_view.dart';
 import 'package:bones_app/features/consultation/presentation/view/widgets/custom_search_bar.dart';
+import 'package:bones_app/features/consultation/presentation/view_model/cubit/specialist_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ConsultationViewBody extends StatelessWidget {
   const ConsultationViewBody({super.key});
@@ -14,7 +16,11 @@ class ConsultationViewBody extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              const CustomSearchBar(),
+              CustomSearchBar(
+                onChanged: (query) {
+                  context.read<SpecialistCubit>().searchSpecialists(query);
+                },
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 10, bottom: 15),
                 child: Row(
@@ -23,14 +29,15 @@ class ConsultationViewBody extends StatelessWidget {
                     Text(
                       "Popular Specialists For you ",
                       style: Styles.textStyle15.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          decoration: TextDecoration.underline),
-                    )
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
                   ],
                 ),
               ),
-              const SpecialistsListView()
+              const SpecialistsListView(),
             ],
           ),
         ),
