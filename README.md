@@ -1,19 +1,46 @@
-# bones_app
-
-A new Flutter project.
-🦴 Bones App
+<h1 align="center" style="font-weight: bold;">Bonify 🦴</h1>
 
 A medical Flutter application that allows patients to upload X-ray images, receive AI-generated diagnostic reports, chat with specialists, manage payments, and view their medical history — all built with a clean MVVM architecture and scalable API integration.
 
-## Getting Started
+## 🚀 Tech Stack
 
-This project is a starting point for a Flutter application.
+* Flutter (Dart)
+* MVVM Architecture
+* Cubit (Bloc) State Management
+* Dio + PrettyDioLogger
+* REST APIs
+* SharedPreferences
 
-A few resources to get you started if this is your first Flutter project:
+## 📱 Core Features
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+* Authentication & User management 
+* AI powerd x-ray analysis 
+* User profile based on its role 
+* Chat system 
+* Payment system 
+* Rating system 
+* Responsive UI 
+* Backend integration layer
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 📦 Project Structure
+
+    ├── /lib                
+         ├── core/
+         │   ├── api/
+         │   ├── utils/
+         │   ├── widgets/
+         ├── features/
+         │   ├── auth/
+         │   ├── upload/
+         │   ├── report/
+         │   ├── profile/
+         │   ├── chat/
+         │   ├── consultation/
+         │   ├── payment/
+         │   └── rating/
+         ├── cubits/
+         └── main.dart
+
+## 🎨 Demo 
+
+https://github.com/user-attachments/assets/c250891a-a541-4338-96a4-819dd0ccc58c
