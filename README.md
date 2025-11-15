@@ -1,6 +1,9 @@
 # bones_app
 
 A new Flutter project.
+🦴 Bones App
+
+A medical Flutter application that allows patients to upload X-ray images, receive AI-generated diagnostic reports, chat with specialists, manage payments, and view their medical history — all built with a clean MVVM architecture and scalable API integration.
 
 ## Getting Started
 
